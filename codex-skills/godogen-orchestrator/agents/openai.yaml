@@ -1,0 +1,4 @@
+version: 1
+display_name: Godot Orchestrator
+short_description: Turn a vague or scoped game idea into a Codex-friendly Godot implementation plan.
+default_prompt: Build or extend a Godot 4 game by updating the PRD, plan, structure, assets, and memory docs before implementation.

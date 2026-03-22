@@ -1,0 +1,4 @@
+version: 1
+display_name: Godot Task
+short_description: Execute one scoped Godot 4 gameplay, UI, or systems task with validation.
+default_prompt: Complete one task from the project plan, update the affected scenes and scripts, run validation, and record discoveries.

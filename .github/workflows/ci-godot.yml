@@ -8,7 +8,7 @@ on:
       - master
 
 jobs:
-  validate-godot:
+  validate:
     runs-on: windows-latest
 
     steps:

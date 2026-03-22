@@ -25,6 +25,17 @@ It is meant to help us move in this order:
 5. Capture architecture decisions in `docs/STRUCTURE.md`
 6. Build one task at a time and record discoveries in `docs/MEMORY.md`
 
+## Collaboration Policy
+
+This repo now assumes a PR-first workflow for non-trivial work:
+
+- one small vertical slice per PR by default
+- required checks before merge
+- review required before merge
+- docs and validation evidence included with the PR
+
+The repository includes starter GitHub workflow files and templates under `.github/`, but branch protection and required status checks must still be configured in the GitHub repository settings.
+
 ## Repository Layout
 
 - `AGENTS.md`: Codex operating guide for this project

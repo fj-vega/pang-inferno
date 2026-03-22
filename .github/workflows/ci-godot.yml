@@ -19,7 +19,7 @@ jobs:
         shell: powershell
         run: |
           $zipPath = "$env:RUNNER_TEMP\godot.zip"
-          Invoke-WebRequest -Uri "https://github.com/godotengine/godot/releases/download/4.6-stable/Godot_v4.6.1-stable_win64_console.zip" -OutFile $zipPath
+          Invoke-WebRequest -Uri "https://downloads.godotengine.org/?flavor=stable&platform=windows.64&slug=win64.exe.zip&version=4.6.1" -OutFile $zipPath
           Expand-Archive -Path $zipPath -DestinationPath "$env:RUNNER_TEMP\godot" -Force
           $godotExe = Get-ChildItem "$env:RUNNER_TEMP\godot" -Recurse -Filter "Godot*_console.exe" | Select-Object -First 1 -ExpandProperty FullName
           "GODOT=$godotExe" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append

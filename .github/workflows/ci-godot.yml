@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  validate:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Godot
+        shell: powershell
+        run: |
+          $zipPath = "$env:RUNNER_TEMP\godot.zip"
+          Invoke-WebRequest -Uri "https://downloads.godotengine.org/?flavor=stable&platform=windows.64&slug=win64.exe.zip&version=4.6.1" -OutFile $zipPath
+          Expand-Archive -Path $zipPath -DestinationPath "$env:RUNNER_TEMP\godot" -Force
+          $godotExe = Get-ChildItem "$env:RUNNER_TEMP\godot" -Recurse -Filter "Godot*_console.exe" | Select-Object -First 1 -ExpandProperty FullName
+          "GODOT=$godotExe" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Verify Godot detection
+        shell: powershell
+        run: powershell -ExecutionPolicy Bypass -File .\tools\check-godot.ps1
+
+      - name: Headless project validation
+        shell: powershell
+        run: '& $env:GODOT --headless --path . --quit'

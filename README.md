@@ -1,74 +1,114 @@
-# Codex Godot Starter Pack
+# Pang Inferno
 
-This repository is a Codex-native Godot starter pack adapted from ideas in [`htdt/godogen`](https://github.com/htdt/godogen), but trimmed to fit an OpenAI-only workflow.
+Pang Inferno is a 2D top-down dark fantasy arena survival shooter built in Godot 4.
 
-It is meant to help us move in this order:
+The game mixes the ricochet threat pattern of Pang with the escalating survival pressure of Vampire Survivors. You control a mobile hunter in a cursed arena, dodge infernal enemies that rebound across the battlefield, collect power-ups, and survive long enough to face a final boss.
 
-1. shape the game idea
-2. build a playable base
-3. document architecture and product intent as the game grows
+## Game Pillars
 
-## What This Repo Gives You
+- Movement and positioning matter as much as offense because enemies ricochet unpredictably.
+- Enemy kills reshape the encounter through splitting and mutation.
+- Weapons and power-ups should feel like steel-and-sorcery, not generic arcade sci-fi.
 
-- a project-level agent contract in `AGENTS.md`
-- a document-driven workflow in `docs/`
-- project-local Codex playbooks in `codex-skills/`
-- Godot-friendly repo defaults for version control and editing
-- a small environment check in `tools/check-godot.ps1`
+## Current Scope
 
-## Quick Start
+The current MVP target is:
 
-1. Install Godot 4 stable and make it available through `PATH` or the `GODOT` environment variable.
-2. Run `powershell -ExecutionPolicy Bypass -File .\tools\check-godot.ps1`
-3. Fill in `docs/PRD.md`
-4. Break the work into tasks in `docs/PLAN.md`
-5. Capture architecture decisions in `docs/STRUCTURE.md`
-6. Build one task at a time and record discoveries in `docs/MEMORY.md`
+- one top-down 2D arena
+- omnidirectional player movement
+- shooting-based combat
+- ricocheting enemies
+- enemy split or mutation behavior
+- score and round timer
+- dark fantasy power-ups
+- a final boss near the end of a 5-minute round
 
-## Collaboration Policy
+Out of scope for the first playable:
 
-This repo now assumes a PR-first workflow for non-trivial work:
+- multiple stages or biomes
+- story campaign structure
+- online multiplayer
+- meta-progression between runs
+- final art and audio polish
+
+## Current Project Status
+
+The repo is no longer just a starter template. It now includes:
+
+- a runnable Godot project via [project.godot](/E:/My%20Documents/coding/pang-inferno/project.godot)
+- a bootstrap main scene in [scenes/main/Main.tscn](/E:/My%20Documents/coding/pang-inferno/scenes/main/Main.tscn)
+- starter player, enemy, power-up, HUD, and game-flow scripts
+- headless validation support through Godot CLI and GitHub Actions
+
+The current bootstrap already opens and validates cleanly with:
+
+```powershell
+& $env:GODOT --headless --path . --quit
+```
+
+## Local Setup
+
+1. Install Godot 4 stable.
+2. Make Godot available through `PATH` or set the `GODOT` environment variable.
+3. Verify the setup:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tools\check-godot.ps1
+```
+
+4. Run headless validation:
+
+```powershell
+& $env:GODOT --headless --path . --quit
+```
+
+5. Open the project in Godot:
+
+```powershell
+& $env:GODOT --path .
+```
+
+## Workflow
+
+This repo uses a PR-first workflow for non-trivial work.
 
 - one small vertical slice per PR by default
-- required checks before merge
-- review required before merge
-- docs and validation evidence included with the PR
+- required CI validation before merge
+- docs updated alongside code
+- implementation tracked through `docs/PLAN.md` and `docs/IMPLEMENTATION_CHECKLIST.md`
 
-The repository includes starter GitHub workflow files and templates under `.github/`, but branch protection and required status checks must still be configured in the GitHub repository settings.
+Important project docs:
+
+- `AGENTS.md`: project working agreement for coding agents
+- `docs/PRD.md`: game vision, scope, and design pillars
+- `docs/PLAN.md`: ordered implementation backlog
+- `docs/IMPLEMENTATION_CHECKLIST.md`: concrete slices and done conditions
+- `docs/STRUCTURE.md`: scene and system architecture
+- `docs/MEMORY.md`: implementation discoveries and decisions
+- `docs/ASSETS.md`: asset planning and ownership
 
 ## Repository Layout
 
-- `AGENTS.md`: Codex operating guide for this project
-- `docs/`: PRD, plan, structure, assets, bootstrap notes, and memory
-- `docs/INTAKE.md`: the checklist for turning a vague game request into a buildable brief
-- `codex-skills/`: local playbooks for orchestration and per-task Godot work
-- `scenes/`: scene files and scene-local folders
-- `scripts/`: runtime scripts and shared gameplay code
-- `tests/`: task-specific harnesses and verification scenes/scripts
+- `scenes/`: scene entry points and scene-owned content
+- `scripts/`: runtime gameplay code and systems
+- `assets/`: shared visual, audio, and other game assets
+- `tests/`: focused verification harnesses and test scenes
 - `tools/`: developer-side helper scripts
+- `.github/`: CI workflow plus PR and issue templates
 
-## Godot Conventions In This Starter
+## Validation
 
-- Prefer scene composition and feature ownership over giant scripts.
-- Group assets as close to the scenes that own them as practical.
-- Use signals to reduce coupling between systems.
-- Use scene unique nodes for stable same-scene lookups when they help.
-- Commit generated `.import` metadata files.
-- Do not commit the `.godot/` cache directory.
-- Use LF endings, UTF-8, and tabs for GDScript indentation.
+Primary validation paths:
 
-## Current State
+- `powershell -ExecutionPolicy Bypass -File .\tools\check-godot.ps1`
+- `& $env:GODOT --headless --path . --quit`
 
-This starter pack does not create `project.godot` automatically yet. That is intentional for now:
+GitHub Actions also runs the reusable required check:
 
-- the current environment does not have `godot` on `PATH`
-- the actual project bootstrap should follow the game concept we choose next
-
-## Vague Request Workflow
-
-If this repo is forked and someone says "build me a game about X", Codex should not guess past the safe point. It should first run the checklist in `docs/INTAKE.md`, ask only for the missing minimum context, then translate those answers into `docs/PRD.md` and `docs/PLAN.md`.
+- `CI / validate`
 
 ## References
 
-- Official Godot docs notes captured in `docs/GODOT_NOTES.md`
-- Stable docs homepage: [docs.godotengine.org/en/stable](https://docs.godotengine.org/en/stable/)
+- [Godot stable documentation](https://docs.godotengine.org/en/stable/)
+- [Project PRD](/E:/My%20Documents/coding/pang-inferno/docs/PRD.md)
+- [Implementation checklist](/E:/My%20Documents/coding/pang-inferno/docs/IMPLEMENTATION_CHECKLIST.md)

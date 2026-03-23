@@ -19,7 +19,7 @@ Use this file to record the actual project layout and architecture decisions.
 |---|---|---|---|
 | `scripts/player/player_controller.gd` | Player movement, aim, and firing | Input map, projectile logic | Should support keyboard and controller from the start |
 | `scripts/player/player_health.gd` | Damage, death, and survivability rules | HUD, game flow | Keep health logic separate from movement |
-| `scripts/enemies/enemy_base.gd` | Shared enemy movement and bounce behavior | Arena bounds, evolution data | Core ricochet behavior lives here |
+| `scripts/enemies/enemy_base.gd` | Shared enemy movement, bounce behavior, split metadata, and mutation state | Arena bounds, evolution data | Core ricochet behavior and lightweight mutation rules live here |
 | `scripts/enemies/enemy_evolution.gd` | Split and mutation rules by enemy rank | Enemy base, spawn system | Candidate for lightweight data-driven config |
 | `scripts/enemies/boss_controller.gd` | Boss movement and attack logic | Main game flow | Should plug into same damage systems where practical |
 | `scripts/projectiles/projectile.gd` | Player projectile motion and enemy hit delivery | Player firing, enemy damage | Minimal starter projectile for the first combat slice |
@@ -60,6 +60,7 @@ Record important event flow between scenes and systems here.
 - Power-up pickups emit applied effects to player or combat systems instead of mutating unrelated nodes directly.
 - Current implementation uses the enemy defeated signal to award score and spawn split children without tightly coupling the player or projectile logic to enemy branching.
 - Current implementation also spawns enemies and timed power-up pickups from `game_flow.gd` to keep the MVP loop active before dedicated spawn or reward systems exist.
+- Low-rank enemies can currently mutate in-place after surviving long enough, creating a reusable danger-state transition without bespoke enemy scenes.
 
 ## Node Access Strategy
 

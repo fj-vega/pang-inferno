@@ -61,3 +61,10 @@ Use this file for discoveries that future tasks should not have to rediscover.
 - Discovery: Periodic enemy spawns plus a single timed rapid-fire pickup make the run feel substantially more alive without needing a full wave system yet.
 - Decision: Keep both spawn pacing and power-up spawning inside `game_flow.gd` for now, and use a temporary rapid-fire boon as the first dark fantasy flavored upgrade effect.
 - Follow-up: Add more upgrade variety, replace the temporary placeholder boon naming and presentation with stronger dark fantasy flavor, and introduce mutation or boss pressure on top of the pacing loop.
+
+### 2026-03-23 - Enemy Mutation State
+
+- Context: The evolution slice still lacked a true mutation behavior even after split mechanics were working.
+- Discovery: Letting low-rank enemies mutate in-place after surviving for a few seconds creates meaningful pressure without requiring a separate enemy scene or a one-off boss-like script.
+- Decision: Keep mutation as a lightweight state transition inside `enemy_base.gd` for now, driven by survival time, movement-speed escalation, score increase, and a visual color shift.
+- Follow-up: Add more upgrade variety for the player, then move toward boss timing and boss victory flow so the round has a real climax.

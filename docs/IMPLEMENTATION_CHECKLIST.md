@@ -92,7 +92,7 @@ Last updated: 2026-03-22
 - [x] Implement at least one split behavior.
       Done: A higher-rank enemy can spawn smaller successors on defeat.
 
-- [ ] Implement at least one mutation behavior or state change.
+- [x] Implement at least one mutation behavior or state change.
       Done: An enemy can transition into a more dangerous state without bespoke one-off logic.
 
 ## Slice 4 - Round Flow and Scoring

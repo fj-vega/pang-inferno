@@ -23,7 +23,7 @@ Use this file to record the actual project layout and architecture decisions.
 | `scripts/enemies/enemy_evolution.gd` | Split and mutation rules by enemy rank | Enemy base, spawn system | Candidate for lightweight data-driven config |
 | `scripts/enemies/boss_controller.gd` | Boss movement and attack logic | Main game flow | Should plug into same damage systems where practical |
 | `scripts/projectiles/projectile.gd` | Player projectile motion and enemy hit delivery | Player firing, enemy damage | Minimal starter projectile for the first combat slice |
-| `scripts/systems/game_flow.gd` | Round timer, score, enemy split spawning, and run state | Player, enemy container, HUD | Currently owns lightweight orchestration until larger systems split out |
+| `scripts/systems/game_flow.gd` | Round timer, score, enemy spawning, power-up spawning, and run state | Player, enemy container, power-up container, HUD | Currently owns lightweight orchestration until larger systems split out |
 | `scripts/systems/spawn_manager.gd` | Enemy spawn pacing and wave pressure | Enemy scenes, timer | Can start simple and expand later |
 | `scripts/systems/score_manager.gd` | Score tracking and reward hooks | Enemy deaths, HUD | Autoload only if cross-scene reuse becomes necessary |
 | `scripts/powerups/powerup_effects.gd` | Upgrade definitions and application | Player, combat systems | Supports dark fantasy weapon and magic upgrades |
@@ -59,6 +59,7 @@ Record important event flow between scenes and systems here.
 - Game flow emits timer milestones and boss_phase_started so the HUD and spawner can react without tight coupling.
 - Power-up pickups emit applied effects to player or combat systems instead of mutating unrelated nodes directly.
 - Current implementation uses the enemy defeated signal to award score and spawn split children without tightly coupling the player or projectile logic to enemy branching.
+- Current implementation also spawns enemies and timed power-up pickups from `game_flow.gd` to keep the MVP loop active before dedicated spawn or reward systems exist.
 
 ## Node Access Strategy
 

@@ -40,3 +40,10 @@ Use this file for discoveries that future tasks should not have to rediscover.
 - Discovery: A minimal bootstrap with `project.godot`, a main scene, player scene, enemy placeholder, power-up placeholder, HUD, and headless validation is enough to turn the repo into a real playable foundation.
 - Decision: The first bootstrap keeps keyboard and controller input setup in the startup script so the project is immediately playable without blocking on manual input-map editing.
 - Follow-up: Build the combat foundation next and decide later whether to keep input bootstrap in code or serialize the final input map directly into `project.godot`.
+
+### 2026-03-23 - Combat Foundation Added
+
+- Context: After bootstrap, the next smallest vertical slice was real player combat and survivability rather than more placeholder structure.
+- Discovery: A simple loop of player firing, projectile hits, enemy defeat, contact damage, and HUD health feedback is enough to move the project from bootstrap into an actual combat prototype.
+- Decision: Keep firing scene-local for now by having the player emit shot requests and the main game-flow scene spawn projectiles.
+- Follow-up: Add enemy split or mutation behavior, score tracking, and stronger round-state transitions in the next slice.

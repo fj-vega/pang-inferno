@@ -69,16 +69,16 @@ Last updated: 2026-03-22
 
 ## Slice 2 - Player Combat Foundation
 
-- [ ] Implement omnidirectional movement.
+- [x] Implement omnidirectional movement.
       Done: The player can move smoothly in all directions with keyboard and controller.
 
-- [ ] Implement initial aiming and firing behavior.
+- [x] Implement initial aiming and firing behavior.
       Done: The player can reliably attack in a defined direction with a simple starter weapon.
 
-- [ ] Add basic player health and defeat handling.
+- [x] Add basic player health and defeat handling.
       Done: The player takes damage, can die, and the run ends cleanly on death.
 
-- [ ] Add a minimal projectile or hit system.
+- [x] Add a minimal projectile or hit system.
       Done: Player attacks can damage enemies in a repeatable, testable way.
 
 ## Slice 3 - Enemy Bounce and Evolution

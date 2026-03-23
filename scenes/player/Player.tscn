@@ -1,9 +1,13 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player_controller.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/player/player_health.gd" id="2"]
 
 [sub_resource type="CircleShape2D" id="1"]
 radius = 18.0
+
+[sub_resource type="CircleShape2D" id="2"]
+radius = 20.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1")
@@ -19,3 +23,13 @@ color = Color(0.886275, 0.380392, 0.247059, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("1")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+monitoring = true
+monitorable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("2")
+
+[node name="PlayerHealth" type="Node" parent="."]
+script = ExtResource("2")

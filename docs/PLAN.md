@@ -43,13 +43,13 @@ Use this file as the ordered implementation backlog.
 
 ### 2. Core Loop Slice
 
-- Status: `pending`
+- Status: `in_progress`
 - Depends on: `1. Environment and Bootstrap`
 - Goal: Implement one playable 5-minute round with top-down movement, shooting, bouncing enemies, splitting behavior, scoring, and a boss phase.
 - Player value: There is something playable, not just a shell.
 - Targets: `scenes/main/`, `scripts/player/`, `scripts/enemies/`, `scripts/systems/`
 - Verify: A tester can survive, kill enemies, trigger splits or mutations, collect at least one power-up, and reach the boss phase.
-- Notes: Favor simple enemy archetypes and placeholder art over broad content.
+- Notes: Player movement, firing, projectile hits, enemy defeat, and player health are now in place; next focus is enemy evolution, scoring, and round flow.
 
 ### 3. UX and Feedback Pass
 

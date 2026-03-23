@@ -83,13 +83,13 @@ Last updated: 2026-03-22
 
 ## Slice 3 - Enemy Bounce and Evolution
 
-- [ ] Implement a base ricochet enemy.
+- [x] Implement a base ricochet enemy.
       Done: An enemy moves, bounces against arena bounds, and damages the player on contact.
 
-- [ ] Implement enemy damage and death.
+- [x] Implement enemy damage and death.
       Done: Enemy defeat is visible, scoreable, and free of script errors.
 
-- [ ] Implement at least one split behavior.
+- [x] Implement at least one split behavior.
       Done: A higher-rank enemy can spawn smaller successors on defeat.
 
 - [ ] Implement at least one mutation behavior or state change.
@@ -97,17 +97,17 @@ Last updated: 2026-03-22
 
 ## Slice 4 - Round Flow and Scoring
 
-- [ ] Add a 5-minute round timer.
+- [x] Add a 5-minute round timer.
       Done: The HUD and game flow reflect the remaining round time accurately.
 
-- [ ] Add score tracking.
+- [x] Add score tracking.
       Done: Defeating enemies increases score and the HUD updates correctly.
 
 - [ ] Add spawn pacing.
       Done: Enemies appear over time in a way that creates increasing pressure.
 
-- [ ] Add round-end conditions.
-      Done: The game resolves cleanly on player death or boss defeat.
+- [x] Add round-end conditions.
+      Done: The game resolves cleanly on player death or timer survival for the current slice.
 
 ## Slice 5 - Power-Ups and Dark Fantasy Flavor
 

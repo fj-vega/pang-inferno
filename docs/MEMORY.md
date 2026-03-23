@@ -47,3 +47,10 @@ Use this file for discoveries that future tasks should not have to rediscover.
 - Discovery: A simple loop of player firing, projectile hits, enemy defeat, contact damage, and HUD health feedback is enough to move the project from bootstrap into an actual combat prototype.
 - Decision: Keep firing scene-local for now by having the player emit shot requests and the main game-flow scene spawn projectiles.
 - Follow-up: Add enemy split or mutation behavior, score tracking, and stronger round-state transitions in the next slice.
+
+### 2026-03-23 - Enemy Split And Score Layer
+
+- Context: The combat slice still lacked the signature Pang-like escalation and any visible score reward.
+- Discovery: One rank-based split rule plus score feedback already makes fights feel much closer to the intended loop, even before broader wave or boss systems exist.
+- Decision: Keep split spawning in `game_flow.gd` for now as a lightweight orchestration step instead of introducing separate evolution and score managers too early.
+- Follow-up: Add mutation or alternate enemy states, then introduce spawn pacing so the arena stays populated without hand-placed enemies.

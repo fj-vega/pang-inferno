@@ -3,15 +3,17 @@ extends Node2D
 const ROUND_DURATION := 300.0
 
 var projectile_scene := preload("res://scenes/projectiles/Projectile.tscn")
+var enemy_scene := preload("res://scenes/enemies/EnemyBase.tscn")
 
 @onready var player: CharacterBody2D = $Player
 @onready var player_health: Node = $Player/PlayerHealth
-@onready var enemy: CharacterBody2D = $EnemyBase
+@onready var enemy_container: Node2D = $Enemies
 @onready var projectile_container: Node = $Projectiles
 @onready var hud: CanvasLayer = $HUD
 
 var elapsed_time := 0.0
 var run_over := false
+var score := 0
 
 func _ready() -> void:
 	var input_changed := _ensure_input_actions()
@@ -29,6 +31,8 @@ func _process(delta: float) -> void:
 	var remaining_time: float = max(ROUND_DURATION - elapsed_time, 0.0)
 	if hud.has_method("set_round_time"):
 		hud.call("set_round_time", remaining_time)
+	if remaining_time <= 0.0:
+		_on_round_survived()
 
 
 func _connect_gameplay_signals() -> void:
@@ -38,8 +42,8 @@ func _connect_gameplay_signals() -> void:
 		player_health.health_changed.connect(_on_player_health_changed)
 	if player_health.has_signal("died"):
 		player_health.died.connect(_on_player_died)
-	if enemy != null and enemy.has_signal("defeated"):
-		enemy.defeated.connect(_on_enemy_defeated)
+	for child in enemy_container.get_children():
+		_connect_enemy(child)
 
 
 func _configure_hud() -> void:
@@ -49,6 +53,8 @@ func _configure_hud() -> void:
 		hud.call("set_status", "Fight through the inferno")
 	if hud.has_method("set_health"):
 		hud.call("set_health", player_health.call("get_current_health"), player_health.call("get_max_health"))
+	if hud.has_method("set_score"):
+		hud.call("set_score", score)
 
 
 func _spawn_projectile(origin: Vector2, direction: Vector2) -> void:
@@ -72,9 +78,40 @@ func _on_player_died() -> void:
 		hud.call("set_status", "The hunter has fallen")
 
 
-func _on_enemy_defeated(_position: Vector2) -> void:
+func _on_enemy_defeated(position: Vector2, score_value: int, split_count: int, child_rank: int, child_scale: float) -> void:
+	score += score_value
+	if hud.has_method("set_score"):
+		hud.call("set_score", score)
 	if hud.has_method("set_status"):
 		hud.call("set_status", "Infernal foe destroyed")
+	if split_count > 0 and child_rank > 0:
+		_spawn_split_children(position, split_count, child_rank, child_scale)
+
+
+func _spawn_split_children(position: Vector2, split_count: int, child_rank: int, child_scale: float) -> void:
+	var directions := [
+		Vector2(0.8, -0.6),
+		Vector2(-0.8, 0.6),
+		Vector2(-0.7, -0.7),
+		Vector2(0.7, 0.7)
+	]
+	for index in split_count:
+		var enemy := enemy_scene.instantiate()
+		enemy.global_position = position + (directions[index] * 14.0)
+		enemy.call("configure_variant", child_rank, child_scale, directions[index])
+		enemy_container.add_child(enemy)
+		_connect_enemy(enemy)
+
+
+func _connect_enemy(enemy: Node) -> void:
+	if enemy.has_signal("defeated") and not enemy.defeated.is_connected(_on_enemy_defeated):
+		enemy.defeated.connect(_on_enemy_defeated)
+
+
+func _on_round_survived() -> void:
+	run_over = true
+	if hud.has_method("set_status"):
+		hud.call("set_status", "You survived the round")
 
 
 func _ensure_input_actions() -> bool:

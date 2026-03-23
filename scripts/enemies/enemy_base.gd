@@ -2,22 +2,34 @@ extends CharacterBody2D
 
 signal defeated(position: Vector2, score_value: int, split_count: int, child_rank: int, child_scale: float)
 
+const MUTATION_SPEED_MULTIPLIER := 1.35
+const MUTATION_SCORE_MULTIPLIER := 2
+const MUTATION_COLOR := Color(0.854902, 0.258824, 0.12549, 1)
+
 @export var move_speed := 180.0
 @export var arena_size := Vector2(1280.0, 720.0)
 @export var arena_margin := 36.0
 @export var max_health := 3
 @export var rank := 2
 @export var score_value := 100
+@export var can_mutate := true
+@export var mutation_delay := 7.0
+
+@onready var sprite: Polygon2D = $Sprite
 
 var current_health := 0
+var mutation_elapsed := 0.0
+var mutated := false
 
 func _ready() -> void:
 	add_to_group("enemies")
 	current_health = max_health
 	velocity = Vector2(-0.8, 0.6).normalized() * move_speed
+	_refresh_visuals()
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	_update_mutation(delta)
 	move_and_slide()
 
 	if global_position.x <= arena_margin or global_position.x >= arena_size.x - arena_margin:
@@ -53,4 +65,34 @@ func configure_variant(new_rank: int, new_scale: float, starting_direction: Vect
 	max_health = max(1, new_rank)
 	score_value = 50 * new_rank
 	current_health = max_health
+	can_mutate = new_rank <= 1
+	mutation_delay = 5.0 + (2.0 * float(new_rank))
+	mutated = false
+	mutation_elapsed = 0.0
 	velocity = starting_direction.normalized() * move_speed
+	_refresh_visuals()
+
+
+func _update_mutation(delta: float) -> void:
+	if not can_mutate or mutated:
+		return
+
+	mutation_elapsed += delta
+	if mutation_elapsed < mutation_delay:
+		return
+
+	mutated = true
+	move_speed *= MUTATION_SPEED_MULTIPLIER
+	score_value *= MUTATION_SCORE_MULTIPLIER
+	velocity = velocity.normalized() * move_speed
+	_refresh_visuals()
+
+
+func _refresh_visuals() -> void:
+	if sprite == null:
+		return
+
+	if mutated:
+		sprite.color = MUTATION_COLOR
+	else:
+		sprite.color = Color(0.54902, 0.109804, 0.0784314, 1)

@@ -49,7 +49,7 @@ Use this file as the ordered implementation backlog.
 - Player value: There is something playable, not just a shell.
 - Targets: `scenes/main/`, `scripts/player/`, `scripts/enemies/`, `scripts/systems/`
 - Verify: A tester can survive, kill enemies, trigger splits or mutations, collect at least one power-up, and reach the boss phase.
-- Notes: Player combat, enemy splitting, score tracking, spawn pacing, one temporary rapid-fire power-up, and enemy mutation are in place. Richer upgrade variety and boss escalation still remain.
+- Notes: Player combat, enemy splitting, score tracking, spawn pacing, three distinct upgrade effects, and enemy mutation are in place. Stronger thematic polish and boss escalation still remain.
 
 ### 3. UX and Feedback Pass
 

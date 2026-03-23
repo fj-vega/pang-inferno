@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-signal shot_requested(origin: Vector2, direction: Vector2)
+signal shot_requested(origin: Vector2, direction: Vector2, pierce_count: int)
 
 const MOVE_SPEED := 360.0
 const ARENA_MARGIN := 48.0
@@ -13,6 +13,7 @@ var look_direction := Vector2.RIGHT
 var fire_cooldown_remaining := 0.0
 var fire_cooldown_multiplier := 1.0
 var rapid_fire_duration_remaining := 0.0
+var piercing_shots_remaining := 0
 
 func _ready() -> void:
 	add_to_group("player")
@@ -70,9 +71,13 @@ func _update_firing(delta: float) -> void:
 		return
 
 	fire_cooldown_remaining = BASE_FIRE_COOLDOWN * fire_cooldown_multiplier
-	shot_requested.emit(global_position + (look_direction * 24.0), look_direction)
+	shot_requested.emit(global_position + (look_direction * 24.0), look_direction, piercing_shots_remaining)
 
 
 func apply_rapid_fire(cooldown_multiplier: float, duration: float) -> void:
 	fire_cooldown_multiplier = cooldown_multiplier
 	rapid_fire_duration_remaining = duration
+
+
+func grant_piercing_shots(count: int) -> void:
+	piercing_shots_remaining += count

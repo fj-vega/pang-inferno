@@ -68,3 +68,10 @@ Use this file for discoveries that future tasks should not have to rediscover.
 - Discovery: Letting low-rank enemies mutate in-place after surviving for a few seconds creates meaningful pressure without requiring a separate enemy scene or a one-off boss-like script.
 - Decision: Keep mutation as a lightweight state transition inside `enemy_base.gd` for now, driven by survival time, movement-speed escalation, score increase, and a visual color shift.
 - Follow-up: Add more upgrade variety for the player, then move toward boss timing and boss victory flow so the round has a real climax.
+
+### 2026-03-23 - Three Upgrade Effects Reached
+
+- Context: The power-up layer had only one temporary rapid-fire effect, which was not enough to satisfy the planned upgrade variety.
+- Discovery: Rapid fire, a healing ward, and temporary piercing shots are enough to make pickups feel meaningfully different even with the current simple combat model.
+- Decision: Keep upgrade application lightweight for now by routing pickup effects through `game_flow.gd` into existing player and health components instead of building a dedicated upgrade manager yet.
+- Follow-up: Improve the dark fantasy flavor of the upgrade names and visuals, then move toward boss timing and boss victory flow.

@@ -26,7 +26,7 @@ Use this file to record the actual project layout and architecture decisions.
 | `scripts/systems/game_flow.gd` | Round timer, score, enemy spawning, power-up spawning, and run state | Player, enemy container, power-up container, HUD | Currently owns lightweight orchestration until larger systems split out |
 | `scripts/systems/spawn_manager.gd` | Enemy spawn pacing and wave pressure | Enemy scenes, timer | Can start simple and expand later |
 | `scripts/systems/score_manager.gd` | Score tracking and reward hooks | Enemy deaths, HUD | Autoload only if cross-scene reuse becomes necessary |
-| `scripts/powerups/powerup_effects.gd` | Upgrade definitions and application | Player, combat systems | Supports dark fantasy weapon and magic upgrades |
+| `scripts/powerups/powerup_pickup.gd` | Pickup variant selection and collection signaling | Player body, game flow | Currently supports rapid fire, heal, and piercing shot boons |
 
 ## Autoloads
 

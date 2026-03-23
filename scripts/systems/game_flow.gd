@@ -102,17 +102,18 @@ func _update_powerup_spawning(delta: float) -> void:
 	powerup_spawn_timer = POWERUP_SPAWN_INTERVAL
 	var powerup := powerup_scene.instantiate()
 	powerup.global_position = _random_arena_position(120.0)
+	powerup.call("configure_random", rng)
 	powerup_container.add_child(powerup)
 	_connect_powerup(powerup)
 
 
-func _spawn_projectile(origin: Vector2, direction: Vector2) -> void:
+func _spawn_projectile(origin: Vector2, direction: Vector2, pierce_count: int) -> void:
 	if run_over:
 		return
 
 	var projectile := projectile_scene.instantiate()
 	projectile.global_position = origin
-	projectile.call("setup", direction)
+	projectile.call("setup", direction, pierce_count)
 	projectile_container.add_child(projectile)
 
 
@@ -163,10 +164,19 @@ func _connect_powerup(powerup: Node) -> void:
 
 
 func _on_powerup_collected(effect_name: String) -> void:
-	if effect_name == "rapid_fire":
-		player.call("apply_rapid_fire", 0.45, 8.0)
-		if hud.has_method("set_status"):
-			hud.call("set_status", "Blood rite: rapid fire")
+	match effect_name:
+		"rapid_fire":
+			player.call("apply_rapid_fire", 0.45, 8.0)
+			if hud.has_method("set_status"):
+				hud.call("set_status", "Blood rite: rapid fire")
+		"heal":
+			player_health.call("heal", 2)
+			if hud.has_method("set_status"):
+				hud.call("set_status", "Iron ward: vitality restored")
+		"pierce":
+			player.call("grant_piercing_shots", 8)
+			if hud.has_method("set_status"):
+				hud.call("set_status", "Void thorn: shots pierce")
 
 
 func _on_round_survived() -> void:

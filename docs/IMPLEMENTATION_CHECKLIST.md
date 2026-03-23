@@ -114,7 +114,7 @@ Last updated: 2026-03-22
 - [x] Add collectible power-up drops.
       Done: At least one pickup can appear and be collected during normal play.
 
-- [ ] Implement at least three distinct upgrades.
+- [x] Implement at least three distinct upgrades.
       Done: Three upgrades have clearly different gameplay effects during a run.
 
 - [ ] Tie weapons and power-ups to the dark fantasy theme.

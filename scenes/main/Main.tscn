@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/systems/game_flow.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/EnemyBase.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://scenes/powerups/PowerUpPickup.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/Boss.tscn" id="6"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1")

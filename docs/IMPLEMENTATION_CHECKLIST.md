@@ -122,10 +122,10 @@ Last updated: 2026-03-22
 
 ## Slice 6 - Boss Phase
 
-- [ ] Add boss spawn timing near the end of the round.
+- [x] Add boss spawn timing near the end of the round.
       Done: The boss phase begins consistently and communicates itself clearly.
 
-- [ ] Implement one boss behavior set.
+- [x] Implement one boss behavior set.
       Done: The boss has readable attack or movement patterns and interacts with the same combat rules where practical.
 
 - [ ] Finalize boss victory flow.

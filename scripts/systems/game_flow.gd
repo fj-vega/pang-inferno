@@ -4,9 +4,11 @@ const ROUND_DURATION := 300.0
 const MAX_ENEMIES := 8
 const ENEMY_SPAWN_INTERVAL := 2.8
 const POWERUP_SPAWN_INTERVAL := 18.0
+const BOSS_PHASE_TRIGGER_TIME := 45.0
 
 var projectile_scene := preload("res://scenes/projectiles/Projectile.tscn")
 var enemy_scene := preload("res://scenes/enemies/EnemyBase.tscn")
+var boss_scene := preload("res://scenes/enemies/Boss.tscn")
 var powerup_scene := preload("res://scenes/powerups/PowerUpPickup.tscn")
 
 @onready var player: CharacterBody2D = $Player
@@ -21,6 +23,8 @@ var run_over := false
 var score := 0
 var enemy_spawn_timer := 1.5
 var powerup_spawn_timer := 10.0
+var boss_spawned := false
+var boss_active := false
 var rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
@@ -40,11 +44,14 @@ func _process(delta: float) -> void:
 	var remaining_time: float = max(ROUND_DURATION - elapsed_time, 0.0)
 	if hud.has_method("set_round_time"):
 		hud.call("set_round_time", remaining_time)
+	if not boss_spawned and remaining_time <= BOSS_PHASE_TRIGGER_TIME:
+		_spawn_boss_phase()
 	if remaining_time <= 0.0:
 		_on_round_survived()
 		return
 
-	_update_enemy_spawning(delta)
+	if not boss_active:
+		_update_enemy_spawning(delta)
 	_update_powerup_spawning(delta)
 
 
@@ -107,6 +114,21 @@ func _update_powerup_spawning(delta: float) -> void:
 	_connect_powerup(powerup)
 
 
+func _spawn_boss_phase() -> void:
+	boss_spawned = true
+	boss_active = true
+	for child in enemy_container.get_children():
+		child.queue_free()
+
+	var boss := boss_scene.instantiate()
+	boss.global_position = Vector2(640.0, 120.0)
+	boss.call("set_target", player)
+	enemy_container.add_child(boss)
+	_connect_enemy(boss)
+	if hud.has_method("set_status"):
+		hud.call("set_status", "Boss phase: infernal champion")
+
+
 func _spawn_projectile(origin: Vector2, direction: Vector2, pierce_count: int) -> void:
 	if run_over:
 		return
@@ -134,7 +156,7 @@ func _on_enemy_defeated(position: Vector2, score_value: int, split_count: int, c
 		hud.call("set_score", score)
 	if hud.has_method("set_status"):
 		hud.call("set_status", "Infernal foe destroyed")
-	if split_count > 0 and child_rank > 0:
+	if split_count > 0 and child_rank > 0 and not boss_active:
 		_spawn_split_children(position, split_count, child_rank, child_scale)
 
 

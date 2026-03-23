@@ -75,3 +75,10 @@ Use this file for discoveries that future tasks should not have to rediscover.
 - Discovery: Rapid fire, a healing ward, and temporary piercing shots are enough to make pickups feel meaningfully different even with the current simple combat model.
 - Decision: Keep upgrade application lightweight for now by routing pickup effects through `game_flow.gd` into existing player and health components instead of building a dedicated upgrade manager yet.
 - Follow-up: Improve the dark fantasy flavor of the upgrade names and visuals, then move toward boss timing and boss victory flow.
+
+### 2026-03-23 - Boss Phase Started
+
+- Context: The round had pressure and escalation, but still no real late-run climax.
+- Discovery: Spawning a single late-round boss and pausing normal enemy pressure is enough to make the end of the timer feel structurally different even before full win-state logic exists.
+- Decision: Keep the first boss behavior simple by using a focused chase pattern and the same damage pipeline as regular enemies.
+- Follow-up: Add boss victory flow so defeating the boss resolves the round cleanly instead of only relying on timer survival.

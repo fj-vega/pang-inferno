@@ -16,6 +16,12 @@ theme_override_constants/margin_top = 24
 [node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 text = "Pang Inferno"
 
+[node name="HealthLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+text = "Health"
+
+[node name="HealthValue" type="Label" parent="MarginContainer/VBoxContainer"]
+text = "5 / 5"
+
 [node name="TimerLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 text = "Time"
 

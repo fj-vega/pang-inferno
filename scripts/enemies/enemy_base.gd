@@ -1,10 +1,17 @@
 extends CharacterBody2D
 
+signal defeated(position: Vector2)
+
 @export var move_speed := 180.0
 @export var arena_size := Vector2(1280.0, 720.0)
 @export var arena_margin := 36.0
+@export var max_health := 3
+
+var current_health := 0
 
 func _ready() -> void:
+	add_to_group("enemies")
+	current_health = max_health
 	velocity = Vector2(-0.8, 0.6).normalized() * move_speed
 
 
@@ -18,3 +25,12 @@ func _physics_process(_delta: float) -> void:
 	if global_position.y <= arena_margin or global_position.y >= arena_size.y - arena_margin:
 		velocity.y *= -1.0
 		global_position.y = clamp(global_position.y, arena_margin, arena_size.y - arena_margin)
+
+
+func take_damage(amount: int) -> void:
+	current_health -= amount
+	if current_health > 0:
+		return
+
+	defeated.emit(global_position)
+	queue_free()

@@ -22,6 +22,7 @@ Use this file to record the actual project layout and architecture decisions.
 | `scripts/enemies/enemy_base.gd` | Shared enemy movement and bounce behavior | Arena bounds, evolution data | Core ricochet behavior lives here |
 | `scripts/enemies/enemy_evolution.gd` | Split and mutation rules by enemy rank | Enemy base, spawn system | Candidate for lightweight data-driven config |
 | `scripts/enemies/boss_controller.gd` | Boss movement and attack logic | Main game flow | Should plug into same damage systems where practical |
+| `scripts/projectiles/projectile.gd` | Player projectile motion and enemy hit delivery | Player firing, enemy damage | Minimal starter projectile for the first combat slice |
 | `scripts/systems/game_flow.gd` | Round timer, win or loss state, and boss timing | Player, enemy manager, HUD | Good candidate to keep the 5-minute structure clear |
 | `scripts/systems/spawn_manager.gd` | Enemy spawn pacing and wave pressure | Enemy scenes, timer | Can start simple and expand later |
 | `scripts/systems/score_manager.gd` | Score tracking and reward hooks | Enemy deaths, HUD | Autoload only if cross-scene reuse becomes necessary |

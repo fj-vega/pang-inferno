@@ -154,6 +154,10 @@ func _on_enemy_defeated(position: Vector2, score_value: int, split_count: int, c
 	score += score_value
 	if hud.has_method("set_score"):
 		hud.call("set_score", score)
+	var defeated_boss := boss_active and split_count == 0 and child_rank == 0
+	if defeated_boss:
+		_on_boss_defeated()
+		return
 	if hud.has_method("set_status"):
 		hud.call("set_status", "Infernal foe destroyed")
 	if split_count > 0 and child_rank > 0 and not boss_active:
@@ -205,6 +209,17 @@ func _on_round_survived() -> void:
 	run_over = true
 	if hud.has_method("set_status"):
 		hud.call("set_status", "You survived the round")
+
+
+func _on_boss_defeated() -> void:
+	run_over = true
+	boss_active = false
+	for child in enemy_container.get_children():
+		child.queue_free()
+	for child in powerup_container.get_children():
+		child.queue_free()
+	if hud.has_method("set_status"):
+		hud.call("set_status", "Victory: infernal champion slain")
 
 
 func _random_arena_position(margin: float) -> Vector2:

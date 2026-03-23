@@ -82,3 +82,10 @@ Use this file for discoveries that future tasks should not have to rediscover.
 - Discovery: Spawning a single late-round boss and pausing normal enemy pressure is enough to make the end of the timer feel structurally different even before full win-state logic exists.
 - Decision: Keep the first boss behavior simple by using a focused chase pattern and the same damage pipeline as regular enemies.
 - Follow-up: Add boss victory flow so defeating the boss resolves the round cleanly instead of only relying on timer survival.
+
+### 2026-03-23 - Boss Victory Flow Added
+
+- Context: The boss phase existed, but defeating the boss did not yet produce a distinct end-of-round win state.
+- Discovery: Resolving boss defeat through the same signal path as other enemies works cleanly as long as game flow explicitly recognizes the active boss encounter and upgrades the result into a victory state.
+- Decision: Handle boss victory inside `game_flow.gd`, where the round already owns score, phase transitions, and cleanup of remaining combat actors.
+- Follow-up: Improve thematic polish and UX signaling so victory, boss phase, and upgrades feel more strongly dark fantasy and less placeholder.

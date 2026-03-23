@@ -1,24 +1,33 @@
 extends Node2D
 
 const ROUND_DURATION := 300.0
+const MAX_ENEMIES := 8
+const ENEMY_SPAWN_INTERVAL := 2.8
+const POWERUP_SPAWN_INTERVAL := 18.0
 
 var projectile_scene := preload("res://scenes/projectiles/Projectile.tscn")
 var enemy_scene := preload("res://scenes/enemies/EnemyBase.tscn")
+var powerup_scene := preload("res://scenes/powerups/PowerUpPickup.tscn")
 
 @onready var player: CharacterBody2D = $Player
 @onready var player_health: Node = $Player/PlayerHealth
 @onready var enemy_container: Node2D = $Enemies
 @onready var projectile_container: Node = $Projectiles
+@onready var powerup_container: Node2D = $PowerUps
 @onready var hud: CanvasLayer = $HUD
 
 var elapsed_time := 0.0
 var run_over := false
 var score := 0
+var enemy_spawn_timer := 1.5
+var powerup_spawn_timer := 10.0
+var rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
 	var input_changed := _ensure_input_actions()
 	if input_changed:
 		ProjectSettings.save()
+	rng.randomize()
 	_connect_gameplay_signals()
 	_configure_hud()
 
@@ -33,6 +42,10 @@ func _process(delta: float) -> void:
 		hud.call("set_round_time", remaining_time)
 	if remaining_time <= 0.0:
 		_on_round_survived()
+		return
+
+	_update_enemy_spawning(delta)
+	_update_powerup_spawning(delta)
 
 
 func _connect_gameplay_signals() -> void:
@@ -44,6 +57,8 @@ func _connect_gameplay_signals() -> void:
 		player_health.died.connect(_on_player_died)
 	for child in enemy_container.get_children():
 		_connect_enemy(child)
+	for child in powerup_container.get_children():
+		_connect_powerup(child)
 
 
 func _configure_hud() -> void:
@@ -55,6 +70,40 @@ func _configure_hud() -> void:
 		hud.call("set_health", player_health.call("get_current_health"), player_health.call("get_max_health"))
 	if hud.has_method("set_score"):
 		hud.call("set_score", score)
+
+
+func _update_enemy_spawning(delta: float) -> void:
+	enemy_spawn_timer -= delta
+	if enemy_spawn_timer > 0.0:
+		return
+	if enemy_container.get_child_count() >= MAX_ENEMIES:
+		enemy_spawn_timer = 1.0
+		return
+
+	enemy_spawn_timer = max(1.1, ENEMY_SPAWN_INTERVAL - (elapsed_time / 90.0))
+	var enemy := enemy_scene.instantiate()
+	enemy.global_position = _random_arena_position(72.0)
+	var direction: Vector2 = (player.global_position - enemy.global_position).normalized()
+	if direction.length() <= 0.0:
+		direction = Vector2.LEFT
+	enemy.call("configure_variant", 2, 1.0, direction)
+	enemy_container.add_child(enemy)
+	_connect_enemy(enemy)
+
+
+func _update_powerup_spawning(delta: float) -> void:
+	powerup_spawn_timer -= delta
+	if powerup_spawn_timer > 0.0:
+		return
+	if powerup_container.get_child_count() > 0:
+		powerup_spawn_timer = 6.0
+		return
+
+	powerup_spawn_timer = POWERUP_SPAWN_INTERVAL
+	var powerup := powerup_scene.instantiate()
+	powerup.global_position = _random_arena_position(120.0)
+	powerup_container.add_child(powerup)
+	_connect_powerup(powerup)
 
 
 func _spawn_projectile(origin: Vector2, direction: Vector2) -> void:
@@ -108,10 +157,29 @@ func _connect_enemy(enemy: Node) -> void:
 		enemy.defeated.connect(_on_enemy_defeated)
 
 
+func _connect_powerup(powerup: Node) -> void:
+	if powerup.has_signal("collected") and not powerup.collected.is_connected(_on_powerup_collected):
+		powerup.collected.connect(_on_powerup_collected)
+
+
+func _on_powerup_collected(effect_name: String) -> void:
+	if effect_name == "rapid_fire":
+		player.call("apply_rapid_fire", 0.45, 8.0)
+		if hud.has_method("set_status"):
+			hud.call("set_status", "Blood rite: rapid fire")
+
+
 func _on_round_survived() -> void:
 	run_over = true
 	if hud.has_method("set_status"):
 		hud.call("set_status", "You survived the round")
+
+
+func _random_arena_position(margin: float) -> Vector2:
+	return Vector2(
+		rng.randf_range(64.0 + margin, 1216.0 - margin),
+		rng.randf_range(64.0 + margin, 656.0 - margin)
+	)
 
 
 func _ensure_input_actions() -> bool:

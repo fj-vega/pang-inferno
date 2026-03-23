@@ -54,3 +54,10 @@ Use this file for discoveries that future tasks should not have to rediscover.
 - Discovery: One rank-based split rule plus score feedback already makes fights feel much closer to the intended loop, even before broader wave or boss systems exist.
 - Decision: Keep split spawning in `game_flow.gd` for now as a lightweight orchestration step instead of introducing separate evolution and score managers too early.
 - Follow-up: Add mutation or alternate enemy states, then introduce spawn pacing so the arena stays populated without hand-placed enemies.
+
+### 2026-03-23 - Spawn Pacing And First Power-Up
+
+- Context: After split behavior and score existed, the arena still depended too much on a fixed starting enemy and placeholder pickup placement.
+- Discovery: Periodic enemy spawns plus a single timed rapid-fire pickup make the run feel substantially more alive without needing a full wave system yet.
+- Decision: Keep both spawn pacing and power-up spawning inside `game_flow.gd` for now, and use a temporary rapid-fire boon as the first dark fantasy flavored upgrade effect.
+- Follow-up: Add more upgrade variety, replace the temporary placeholder boon naming and presentation with stronger dark fantasy flavor, and introduce mutation or boss pressure on top of the pacing loop.

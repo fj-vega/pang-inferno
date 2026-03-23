@@ -32,14 +32,13 @@ color = Color(0.219608, 0.133333, 0.117647, 1)
 
 [node name="Enemies" type="Node2D" parent="."]
 
+[node name="PowerUps" type="Node2D" parent="."]
+
 [node name="Player" parent="." instance=ExtResource("2")]
 position = Vector2(640, 360)
 
 [node name="EnemyBase" parent="Enemies" instance=ExtResource("3")]
 position = Vector2(980, 240)
-
-[node name="PowerUpPickup" parent="." instance=ExtResource("4")]
-position = Vector2(320, 220)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(640, 360)

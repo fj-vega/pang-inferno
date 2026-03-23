@@ -5,12 +5,18 @@ signal shot_requested(origin: Vector2, direction: Vector2)
 const MOVE_SPEED := 360.0
 const ARENA_MARGIN := 48.0
 const ARENA_SIZE := Vector2(1280.0, 720.0)
-const FIRE_COOLDOWN := 0.22
+const BASE_FIRE_COOLDOWN := 0.22
 
 @onready var facing_indicator: Polygon2D = $FacingIndicator
 
 var look_direction := Vector2.RIGHT
 var fire_cooldown_remaining := 0.0
+var fire_cooldown_multiplier := 1.0
+var rapid_fire_duration_remaining := 0.0
+
+func _ready() -> void:
+	add_to_group("player")
+
 
 func _physics_process(delta: float) -> void:
 	var movement := Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -19,6 +25,7 @@ func _physics_process(delta: float) -> void:
 	_clamp_into_arena()
 	_update_look_direction(movement)
 	_update_indicator_rotation()
+	_update_buff_timers(delta)
 	_update_firing(delta)
 
 
@@ -46,6 +53,15 @@ func _update_indicator_rotation() -> void:
 	facing_indicator.rotation = look_direction.angle()
 
 
+func _update_buff_timers(delta: float) -> void:
+	if rapid_fire_duration_remaining <= 0.0:
+		return
+
+	rapid_fire_duration_remaining = max(rapid_fire_duration_remaining - delta, 0.0)
+	if rapid_fire_duration_remaining == 0.0:
+		fire_cooldown_multiplier = 1.0
+
+
 func _update_firing(delta: float) -> void:
 	fire_cooldown_remaining = max(fire_cooldown_remaining - delta, 0.0)
 	if not Input.is_action_pressed("fire"):
@@ -53,5 +69,10 @@ func _update_firing(delta: float) -> void:
 	if fire_cooldown_remaining > 0.0:
 		return
 
-	fire_cooldown_remaining = FIRE_COOLDOWN
+	fire_cooldown_remaining = BASE_FIRE_COOLDOWN * fire_cooldown_multiplier
 	shot_requested.emit(global_position + (look_direction * 24.0), look_direction)
+
+
+func apply_rapid_fire(cooldown_multiplier: float, duration: float) -> void:
+	fire_cooldown_multiplier = cooldown_multiplier
+	rapid_fire_duration_remaining = duration

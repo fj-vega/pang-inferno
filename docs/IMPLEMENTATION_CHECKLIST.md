@@ -103,7 +103,7 @@ Last updated: 2026-03-22
 - [x] Add score tracking.
       Done: Defeating enemies increases score and the HUD updates correctly.
 
-- [ ] Add spawn pacing.
+- [x] Add spawn pacing.
       Done: Enemies appear over time in a way that creates increasing pressure.
 
 - [x] Add round-end conditions.
@@ -111,7 +111,7 @@ Last updated: 2026-03-22
 
 ## Slice 5 - Power-Ups and Dark Fantasy Flavor
 
-- [ ] Add collectible power-up drops.
+- [x] Add collectible power-up drops.
       Done: At least one pickup can appear and be collected during normal play.
 
 - [ ] Implement at least three distinct upgrades.

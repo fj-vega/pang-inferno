@@ -23,7 +23,7 @@ Use this file to record the actual project layout and architecture decisions.
 | `scripts/enemies/enemy_evolution.gd` | Split and mutation rules by enemy rank | Enemy base, spawn system | Candidate for lightweight data-driven config |
 | `scripts/enemies/boss_controller.gd` | Boss chase behavior, health, and defeat signaling | Main game flow, player target | Shares the same damage and score pipeline where practical |
 | `scripts/projectiles/projectile.gd` | Player projectile motion and enemy hit delivery | Player firing, enemy damage | Minimal starter projectile for the first combat slice |
-| `scripts/systems/game_flow.gd` | Round timer, score, enemy spawning, power-up spawning, and run state | Player, enemy container, power-up container, HUD | Currently owns lightweight orchestration until larger systems split out |
+| `scripts/systems/game_flow.gd` | Round timer, score, enemy spawning, power-up spawning, boss-phase transitions, and run state | Player, enemy container, power-up container, HUD | Currently owns lightweight orchestration until larger systems split out |
 | `scripts/systems/spawn_manager.gd` | Enemy spawn pacing and wave pressure | Enemy scenes, timer | Can start simple and expand later |
 | `scripts/systems/score_manager.gd` | Score tracking and reward hooks | Enemy deaths, HUD | Autoload only if cross-scene reuse becomes necessary |
 | `scripts/powerups/powerup_pickup.gd` | Pickup variant selection and collection signaling | Player body, game flow | Currently supports rapid fire, heal, and piercing shot boons |
@@ -62,6 +62,7 @@ Record important event flow between scenes and systems here.
 - Current implementation also spawns enemies and timed power-up pickups from `game_flow.gd` to keep the MVP loop active before dedicated spawn or reward systems exist.
 - Low-rank enemies can currently mutate in-place after surviving long enough, creating a reusable danger-state transition without bespoke enemy scenes.
 - The current boss phase clears regular enemies, spawns a single boss late in the round, and swaps the encounter into a focused chase phase.
+- Defeating the boss now resolves the run into a distinct victory state instead of falling through to generic timer survival.
 
 ## Node Access Strategy
 

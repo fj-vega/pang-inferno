@@ -128,7 +128,7 @@ Last updated: 2026-03-22
 - [x] Implement one boss behavior set.
       Done: The boss has readable attack or movement patterns and interacts with the same combat rules where practical.
 
-- [ ] Finalize boss victory flow.
+- [x] Finalize boss victory flow.
       Done: Defeating the boss triggers a distinct win state.
 
 ## Slice 7 - UX and Readability Pass

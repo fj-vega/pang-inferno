@@ -73,10 +73,10 @@ Use this file as the ordered implementation backlog.
 
 ### 5. Power-Up and Weapon Flavor Pass
 
-- Status: `pending`
+- Status: `done`
 - Depends on: `2. Core Loop Slice`
 - Goal: Add a first set of dark fantasy upgrades that make the run feel like steel-and-sorcery instead of abstract arcade combat.
 - Player value: Players get expressive build choices and stronger thematic identity.
 - Targets: `scripts/powerups/`, `docs/ASSETS.md`, `docs/PRD.md`
 - Verify: At least three distinct upgrade effects are available and clearly noticeable during a run.
-- Notes: Good early candidates are cursed bolts, wider shot spread, piercing magic, and a temporary ward.
+- Notes: The current MVP now frames the base weapon as the Ashen Pike, gives boon pickups distinct relic silhouettes and labels, and dresses the arena in a ritual black-iron look without changing the underlying combat rules.

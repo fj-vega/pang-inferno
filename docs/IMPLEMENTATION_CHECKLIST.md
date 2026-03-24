@@ -117,7 +117,7 @@ Last updated: 2026-03-22
 - [x] Implement at least three distinct upgrades.
       Done: Three upgrades have clearly different gameplay effects during a run.
 
-- [ ] Tie weapons and power-ups to the dark fantasy theme.
+- [x] Tie weapons and power-ups to the dark fantasy theme.
       Done: Naming, visuals, and behavior feel steel-and-sorcery rather than generic arcade sci-fi.
 
 ## Slice 6 - Boss Phase

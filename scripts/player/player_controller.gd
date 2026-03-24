@@ -101,9 +101,9 @@ func get_boon_summary() -> String:
 	if rapid_fire_duration_remaining > 0.0:
 		boon_parts.append("Blood Rite %.1fs" % rapid_fire_duration_remaining)
 	if piercing_shots_remaining > 0:
-		boon_parts.append("Void Thorn %d" % piercing_shots_remaining)
+		boon_parts.append("Void Thorn %d bolts" % piercing_shots_remaining)
 	if boon_parts.is_empty():
-		return "No boon claimed"
+		return "Ashen Pike alone"
 	return " | ".join(boon_parts)
 
 

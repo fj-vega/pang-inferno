@@ -11,19 +11,19 @@ Use this file to record the actual project layout and architecture decisions.
 | `scenes/enemies/EnemyBase.tscn` | Shared base enemy scene | `CharacterBody2D` | Supports bounce motion and rank-based evolution |
 | `scenes/enemies/Boss.tscn` | Final boss encounter | `CharacterBody2D` | Spawned late in the 5-minute round |
 | `scenes/powerups/PowerUpPickup.tscn` | Collectible upgrade or buff pickup | `Area2D` | Applies run effects on contact |
-| `scenes/ui/HUD.tscn` | In-run UI | `CanvasLayer` | Shows health, timer, score, and boss phase |
+| `scenes/ui/HUD.tscn` | In-run UI | `CanvasLayer` | Shows health, timer, score, phase, active boon state, status text, and control guidance |
 
 ## Scripts and Systems
 
 | Path | Responsibility | Depends On | Notes |
 |---|---|---|---|
-| `scripts/player/player_controller.gd` | Player movement, aim, and firing | Input map, projectile logic | Should support keyboard and controller from the start |
+| `scripts/player/player_controller.gd` | Player movement, aim, firing, and temporary boon state | Input map, projectile logic | Emits boon summary updates so the HUD can explain active power spikes |
 | `scripts/player/player_health.gd` | Damage, death, and survivability rules | HUD, game flow | Keep health logic separate from movement |
 | `scripts/enemies/enemy_base.gd` | Shared enemy movement, bounce behavior, split metadata, and mutation state | Arena bounds, evolution data | Core ricochet behavior and lightweight mutation rules live here |
 | `scripts/enemies/enemy_evolution.gd` | Split and mutation rules by enemy rank | Enemy base, spawn system | Candidate for lightweight data-driven config |
 | `scripts/enemies/boss_controller.gd` | Boss chase behavior, health, and defeat signaling | Main game flow, player target | Shares the same damage and score pipeline where practical |
 | `scripts/projectiles/projectile.gd` | Player projectile motion and enemy hit delivery | Player firing, enemy damage | Minimal starter projectile for the first combat slice |
-| `scripts/systems/game_flow.gd` | Round timer, score, enemy spawning, power-up spawning, boss-phase transitions, and run state | Player, enemy container, power-up container, HUD | Currently owns lightweight orchestration until larger systems split out |
+| `scripts/systems/game_flow.gd` | Round timer, score, enemy spawning, power-up spawning, boss-phase transitions, run state, and HUD messaging | Player, enemy container, power-up container, HUD | Currently owns lightweight orchestration until larger systems split out |
 | `scripts/systems/spawn_manager.gd` | Enemy spawn pacing and wave pressure | Enemy scenes, timer | Can start simple and expand later |
 | `scripts/systems/score_manager.gd` | Score tracking and reward hooks | Enemy deaths, HUD | Autoload only if cross-scene reuse becomes necessary |
 | `scripts/powerups/powerup_pickup.gd` | Pickup variant selection and collection signaling | Player body, game flow | Currently supports rapid fire, heal, and piercing shot boons |
@@ -63,6 +63,7 @@ Record important event flow between scenes and systems here.
 - Low-rank enemies can currently mutate in-place after surviving long enough, creating a reusable danger-state transition without bespoke enemy scenes.
 - The current boss phase clears regular enemies, spawns a single boss late in the round, and swaps the encounter into a focused chase phase.
 - Defeating the boss now resolves the run into a distinct victory state instead of falling through to generic timer survival.
+- The player now emits boon summary updates, allowing the HUD to display active rapid-fire and piercing effects without polling multiple gameplay systems.
 
 ## Node Access Strategy
 

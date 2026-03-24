@@ -15,12 +15,14 @@ theme_override_constants/margin_top = 24
 
 [node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 text = "Pang Inferno"
+theme_override_font_sizes/font_size = 28
 
 [node name="HealthLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 text = "Health"
 
 [node name="HealthValue" type="Label" parent="MarginContainer/VBoxContainer"]
 text = "5 / 5"
+modulate = Color(0.964706, 0.905882, 0.811765, 1)
 
 [node name="ScoreLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 text = "Score"
@@ -34,8 +36,34 @@ text = "Time"
 [node name="TimerValue" type="Label" parent="MarginContainer/VBoxContainer"]
 text = "5:00"
 
+[node name="PhaseLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+text = "Phase"
+
+[node name="PhaseValue" type="Label" parent="MarginContainer/VBoxContainer"]
+text = "Hunt"
+
+[node name="ObjectiveLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+text = "Objective"
+
+[node name="ObjectiveValue" type="Label" parent="MarginContainer/VBoxContainer"]
+text = "Cull foes and endure the arena"
+
+[node name="BoonLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+text = "Boon"
+
+[node name="BoonValue" type="Label" parent="MarginContainer/VBoxContainer"]
+text = "No boon claimed"
+
 [node name="StatusLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 text = "Status"
 
 [node name="StatusValue" type="Label" parent="MarginContainer/VBoxContainer"]
 text = "Awaiting battle"
+
+[node name="ControlsLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+text = "Controls"
+
+[node name="ControlsValue" type="Label" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(420, 0)
+autowrap_mode = 3
+text = "Move: WASD or left stick | Aim: mouse or right stick | Fire: Space or A"

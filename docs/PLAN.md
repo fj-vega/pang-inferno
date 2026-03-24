@@ -43,23 +43,23 @@ Use this file as the ordered implementation backlog.
 
 ### 2. Core Loop Slice
 
-- Status: `in_progress`
+- Status: `done`
 - Depends on: `1. Environment and Bootstrap`
 - Goal: Implement one playable 5-minute round with top-down movement, shooting, bouncing enemies, splitting behavior, scoring, and a boss phase.
 - Player value: There is something playable, not just a shell.
 - Targets: `scenes/main/`, `scripts/player/`, `scripts/enemies/`, `scripts/systems/`
 - Verify: A tester can survive, kill enemies, trigger splits or mutations, collect at least one power-up, and reach the boss phase.
-- Notes: Player combat, enemy splitting, score tracking, spawn pacing, three distinct upgrade effects, enemy mutation, and boss victory flow are in place. Stronger thematic polish remains a key next layer.
+- Notes: Player combat, enemy splitting, score tracking, spawn pacing, three distinct upgrade effects, enemy mutation, boss victory flow, and first-pass run readability are now in place. Stronger thematic polish remains a key next layer.
 
 ### 3. UX and Feedback Pass
 
-- Status: `pending`
+- Status: `done`
 - Depends on: `2. Core Loop Slice`
 - Goal: Add HUD, combat feedback, power-up readability, boss alerts, and stronger dark fantasy presentation cues for the MVP loop.
 - Player value: The game becomes understandable and satisfying enough to evaluate.
 - Targets: `scenes/ui/`, `assets/`, `docs/ASSETS.md`
 - Verify: The player can understand state, goals, and outcomes without explanation.
-- Notes: Keep the look readable first, then stylize toward Conan-plus-magic.
+- Notes: The HUD now exposes phase, objective, boon state, controls, low-health pressure, and clearer boss/victory messaging. The next presentation pass should focus more on thematic visuals than raw comprehension.
 
 ### 4. Enemy Evolution System
 

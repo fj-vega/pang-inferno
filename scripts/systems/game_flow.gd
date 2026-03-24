@@ -58,6 +58,8 @@ func _process(delta: float) -> void:
 func _connect_gameplay_signals() -> void:
 	if player.has_signal("shot_requested"):
 		player.shot_requested.connect(_spawn_projectile)
+	if player.has_signal("boons_changed"):
+		player.boons_changed.connect(_on_player_boons_changed)
 	if player_health.has_signal("health_changed"):
 		player_health.health_changed.connect(_on_player_health_changed)
 	if player_health.has_signal("died"):
@@ -71,8 +73,16 @@ func _connect_gameplay_signals() -> void:
 func _configure_hud() -> void:
 	if hud.has_method("set_round_time"):
 		hud.call("set_round_time", ROUND_DURATION)
+	if hud.has_method("set_phase"):
+		hud.call("set_phase", "Hunt")
+	if hud.has_method("set_objective"):
+		hud.call("set_objective", "Cull foes, gather boons, survive 5 minutes")
+	if hud.has_method("set_boon"):
+		hud.call("set_boon", player.call("get_boon_summary"))
 	if hud.has_method("set_status"):
-		hud.call("set_status", "Fight through the inferno")
+		hud.call("set_status", "The cursed arena awakens")
+	if hud.has_method("set_controls_hint"):
+		hud.call("set_controls_hint", "Move: WASD or left stick | Aim: mouse or right stick | Fire: Space or A")
 	if hud.has_method("set_health"):
 		hud.call("set_health", player_health.call("get_current_health"), player_health.call("get_max_health"))
 	if hud.has_method("set_score"):
@@ -125,8 +135,12 @@ func _spawn_boss_phase() -> void:
 	boss.call("set_target", player)
 	enemy_container.add_child(boss)
 	_connect_enemy(boss)
+	if hud.has_method("set_phase"):
+		hud.call("set_phase", "Boss")
+	if hud.has_method("set_objective"):
+		hud.call("set_objective", "Slay the infernal champion")
 	if hud.has_method("set_status"):
-		hud.call("set_status", "Boss phase: infernal champion")
+		hud.call("set_status", "Boss phase: infernal champion rises")
 
 
 func _spawn_projectile(origin: Vector2, direction: Vector2, pierce_count: int) -> void:
@@ -137,15 +151,23 @@ func _spawn_projectile(origin: Vector2, direction: Vector2, pierce_count: int) -
 	projectile.global_position = origin
 	projectile.call("setup", direction, pierce_count)
 	projectile_container.add_child(projectile)
+	if pierce_count > 0:
+		player.call("consume_pierce_charge")
 
 
 func _on_player_health_changed(current_health: int, max_health: int) -> void:
 	if hud.has_method("set_health"):
 		hud.call("set_health", current_health, max_health)
+	if current_health <= 2 and not run_over and hud.has_method("set_status"):
+		hud.call("set_status", "Your lifeblood runs thin")
 
 
 func _on_player_died() -> void:
 	run_over = true
+	if hud.has_method("set_phase"):
+		hud.call("set_phase", "Defeat")
+	if hud.has_method("set_objective"):
+		hud.call("set_objective", "The hunt is lost")
 	if hud.has_method("set_status"):
 		hud.call("set_status", "The hunter has fallen")
 
@@ -193,20 +215,30 @@ func _on_powerup_collected(effect_name: String) -> void:
 	match effect_name:
 		"rapid_fire":
 			player.call("apply_rapid_fire", 0.45, 8.0)
+			if hud.has_method("set_objective"):
+				hud.call("set_objective", "Spend your boon before it fades")
 			if hud.has_method("set_status"):
 				hud.call("set_status", "Blood rite: rapid fire")
 		"heal":
 			player_health.call("heal", 2)
+			if hud.has_method("set_objective"):
+				hud.call("set_objective", "Regain momentum and hold the arena")
 			if hud.has_method("set_status"):
 				hud.call("set_status", "Iron ward: vitality restored")
 		"pierce":
 			player.call("grant_piercing_shots", 8)
+			if hud.has_method("set_objective"):
+				hud.call("set_objective", "Void thorns can carve through clustered foes")
 			if hud.has_method("set_status"):
 				hud.call("set_status", "Void thorn: shots pierce")
 
 
 func _on_round_survived() -> void:
 	run_over = true
+	if hud.has_method("set_phase"):
+		hud.call("set_phase", "Survived")
+	if hud.has_method("set_objective"):
+		hud.call("set_objective", "Endure until the next descent")
 	if hud.has_method("set_status"):
 		hud.call("set_status", "You survived the round")
 
@@ -218,8 +250,17 @@ func _on_boss_defeated() -> void:
 		child.queue_free()
 	for child in powerup_container.get_children():
 		child.queue_free()
+	if hud.has_method("set_phase"):
+		hud.call("set_phase", "Victory")
+	if hud.has_method("set_objective"):
+		hud.call("set_objective", "The infernal champion is broken")
 	if hud.has_method("set_status"):
 		hud.call("set_status", "Victory: infernal champion slain")
+
+
+func _on_player_boons_changed(summary_text: String) -> void:
+	if hud.has_method("set_boon"):
+		hud.call("set_boon", summary_text)
 
 
 func _random_arena_position(margin: float) -> Vector2:

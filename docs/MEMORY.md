@@ -89,3 +89,10 @@ Use this file for discoveries that future tasks should not have to rediscover.
 - Discovery: Resolving boss defeat through the same signal path as other enemies works cleanly as long as game flow explicitly recognizes the active boss encounter and upgrades the result into a victory state.
 - Decision: Handle boss victory inside `game_flow.gd`, where the round already owns score, phase transitions, and cleanup of remaining combat actors.
 - Follow-up: Improve thematic polish and UX signaling so victory, boss phase, and upgrades feel more strongly dark fantasy and less placeholder.
+
+### 2026-03-24 - HUD Readability Pass
+
+- Context: The core loop was fully playable, but too much important state still lived in temporary status text or player intuition.
+- Discovery: Exposing phase, objective, active boon state, control hints, and low-health feedback in the HUD dramatically improves first-run comprehension without adding new systems.
+- Decision: Let `player_controller.gd` emit a simple boon-summary signal and keep the first readability pass scene-local through `game_flow.gd` and the HUD rather than introducing a separate UI state manager.
+- Follow-up: Future polish should focus on thematic visuals and hit feedback now that the run is understandable at a glance.

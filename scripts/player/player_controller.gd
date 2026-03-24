@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal shot_requested(origin: Vector2, direction: Vector2, pierce_count: int)
+signal boons_changed(summary_text: String)
 
 const MOVE_SPEED := 360.0
 const ARENA_MARGIN := 48.0
@@ -55,12 +56,15 @@ func _update_indicator_rotation() -> void:
 
 
 func _update_buff_timers(delta: float) -> void:
-	if rapid_fire_duration_remaining <= 0.0:
-		return
-
-	rapid_fire_duration_remaining = max(rapid_fire_duration_remaining - delta, 0.0)
-	if rapid_fire_duration_remaining == 0.0:
-		fire_cooldown_multiplier = 1.0
+	var boons_changed_this_frame := false
+	if rapid_fire_duration_remaining > 0.0:
+		var previous_rapid_fire := rapid_fire_duration_remaining
+		rapid_fire_duration_remaining = max(rapid_fire_duration_remaining - delta, 0.0)
+		boons_changed_this_frame = previous_rapid_fire != rapid_fire_duration_remaining
+		if rapid_fire_duration_remaining == 0.0:
+			fire_cooldown_multiplier = 1.0
+	if boons_changed_this_frame:
+		_emit_boon_summary()
 
 
 func _update_firing(delta: float) -> void:
@@ -77,7 +81,31 @@ func _update_firing(delta: float) -> void:
 func apply_rapid_fire(cooldown_multiplier: float, duration: float) -> void:
 	fire_cooldown_multiplier = cooldown_multiplier
 	rapid_fire_duration_remaining = duration
+	_emit_boon_summary()
 
 
 func grant_piercing_shots(count: int) -> void:
 	piercing_shots_remaining += count
+	_emit_boon_summary()
+
+
+func consume_pierce_charge() -> void:
+	if piercing_shots_remaining <= 0:
+		return
+	piercing_shots_remaining -= 1
+	_emit_boon_summary()
+
+
+func get_boon_summary() -> String:
+	var boon_parts: Array[String] = []
+	if rapid_fire_duration_remaining > 0.0:
+		boon_parts.append("Blood Rite %.1fs" % rapid_fire_duration_remaining)
+	if piercing_shots_remaining > 0:
+		boon_parts.append("Void Thorn %d" % piercing_shots_remaining)
+	if boon_parts.is_empty():
+		return "No boon claimed"
+	return " | ".join(boon_parts)
+
+
+func _emit_boon_summary() -> void:
+	boons_changed.emit(get_boon_summary())

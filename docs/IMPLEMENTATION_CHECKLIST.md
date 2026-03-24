@@ -133,13 +133,13 @@ Last updated: 2026-03-22
 
 ## Slice 7 - UX and Readability Pass
 
-- [ ] Add HUD essentials.
+- [x] Add HUD essentials.
       Done: Health, timer, score, and boss phase are visible without explanation.
 
-- [ ] Improve combat readability.
+- [x] Improve combat readability.
       Done: Hits, damage, pickups, and dangerous states are legible during heavy action.
 
-- [ ] Improve first-run clarity.
+- [x] Improve first-run clarity.
       Done: A new tester can understand how to move, fight, survive, and win without verbal coaching.
 
 ## Validation Expectations
@@ -152,9 +152,9 @@ Last updated: 2026-03-22
 
 ## Exit Criteria For The First Playable
 
-- [ ] The project boots cleanly from `project.godot`.
-- [ ] The player can move, shoot, survive, and die.
-- [ ] Enemies ricochet, take damage, and at least one enemy type splits or mutates.
-- [ ] Score, timer, and at least one power-up are working.
-- [ ] A boss appears and can be defeated.
-- [ ] The game reads clearly enough to playtest without explanation.
+- [x] The project boots cleanly from `project.godot`.
+- [x] The player can move, shoot, survive, and die.
+- [x] Enemies ricochet, take damage, and at least one enemy type splits or mutates.
+- [x] Score, timer, and at least one power-up are working.
+- [x] A boss appears and can be defeated.
+- [x] The game reads clearly enough to playtest without explanation.

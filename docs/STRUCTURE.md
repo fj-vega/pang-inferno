@@ -7,10 +7,10 @@ Use this file to record the actual project layout and architecture decisions.
 | Path | Role | Root Node | Notes |
 |---|---|---|---|
 | `scenes/main/Main.tscn` | Main gameplay scene for a single survival round | `Node2D` | Will own arena, spawners, player, enemies, pickups, and HUD hooks |
-| `scenes/player/Player.tscn` | Player-controlled hunter | `CharacterBody2D` | Movement, aiming, shooting, damage intake |
+| `scenes/player/Player.tscn` | Player-controlled hunter | `CharacterBody2D` | Movement, aiming, shooting, damage intake, and a black-iron silhouette with cloak and weapon indicator |
 | `scenes/enemies/EnemyBase.tscn` | Shared base enemy scene | `CharacterBody2D` | Supports bounce motion and rank-based evolution |
 | `scenes/enemies/Boss.tscn` | Final boss encounter | `CharacterBody2D` | Spawned late in the 5-minute round |
-| `scenes/powerups/PowerUpPickup.tscn` | Collectible upgrade or buff pickup | `Area2D` | Applies run effects on contact |
+| `scenes/powerups/PowerUpPickup.tscn` | Collectible upgrade or buff pickup | `Area2D` | Applies run effects on contact and displays a named relic silhouette for each boon |
 | `scenes/ui/HUD.tscn` | In-run UI | `CanvasLayer` | Shows health, timer, score, phase, active boon state, status text, and control guidance |
 
 ## Scripts and Systems
@@ -22,7 +22,7 @@ Use this file to record the actual project layout and architecture decisions.
 | `scripts/enemies/enemy_base.gd` | Shared enemy movement, bounce behavior, split metadata, and mutation state | Arena bounds, evolution data | Core ricochet behavior and lightweight mutation rules live here |
 | `scripts/enemies/enemy_evolution.gd` | Split and mutation rules by enemy rank | Enemy base, spawn system | Candidate for lightweight data-driven config |
 | `scripts/enemies/boss_controller.gd` | Boss chase behavior, health, and defeat signaling | Main game flow, player target | Shares the same damage and score pipeline where practical |
-| `scripts/projectiles/projectile.gd` | Player projectile motion and enemy hit delivery | Player firing, enemy damage | Minimal starter projectile for the first combat slice |
+| `scripts/projectiles/projectile.gd` | Player projectile motion and enemy hit delivery | Player firing, enemy damage | Ashen Pike bolts and Void Thorn shots now use distinct ember or void colors |
 | `scripts/systems/game_flow.gd` | Round timer, score, enemy spawning, power-up spawning, boss-phase transitions, run state, and HUD messaging | Player, enemy container, power-up container, HUD | Currently owns lightweight orchestration until larger systems split out |
 | `scripts/systems/spawn_manager.gd` | Enemy spawn pacing and wave pressure | Enemy scenes, timer | Can start simple and expand later |
 | `scripts/systems/score_manager.gd` | Score tracking and reward hooks | Enemy deaths, HUD | Autoload only if cross-scene reuse becomes necessary |
@@ -64,6 +64,7 @@ Record important event flow between scenes and systems here.
 - The current boss phase clears regular enemies, spawns a single boss late in the round, and swaps the encounter into a focused chase phase.
 - Defeating the boss now resolves the run into a distinct victory state instead of falling through to generic timer survival.
 - The player now emits boon summary updates, allowing the HUD to display active rapid-fire and piercing effects without polling multiple gameplay systems.
+- The current presentation layer leans on lightweight polygonal scene dressing and runtime text rather than imported art so the MVP can feel thematic before a true asset pass exists.
 
 ## Node Access Strategy
 

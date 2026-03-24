@@ -96,3 +96,10 @@ Use this file for discoveries that future tasks should not have to rediscover.
 - Discovery: Exposing phase, objective, active boon state, control hints, and low-health feedback in the HUD dramatically improves first-run comprehension without adding new systems.
 - Decision: Let `player_controller.gd` emit a simple boon-summary signal and keep the first readability pass scene-local through `game_flow.gd` and the HUD rather than introducing a separate UI state manager.
 - Follow-up: Future polish should focus on thematic visuals and hit feedback now that the run is understandable at a glance.
+
+### 2026-03-24 - Dark Fantasy Flavor Pass
+
+- Context: The MVP loop was readable and complete, but much of the presentation still looked like abstract prototype geometry.
+- Discovery: A small number of polygon-based changes carry a lot of thematic weight: naming the base weapon, giving pickups distinct relic silhouettes and labels, tinting projectiles by boon type, and dressing the arena with a ritual dais all make the run feel meaningfully more Conan-plus-magic.
+- Decision: Keep the first flavor pass asset-free and scene-local so the project gains identity without blocking on imported art, fonts, or shader work.
+- Follow-up: The next documentation pass should describe the themed MVP as it exists now, then later art/audio passes can replace these placeholders with authored assets.

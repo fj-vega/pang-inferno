@@ -14,5 +14,10 @@ monitorable = true
 polygon = PackedVector2Array(0, -4, 18, 0, 0, 4)
 color = Color(0.92549, 0.768627, 0.4, 1)
 
+[node name="Trail" type="Polygon2D" parent="."]
+position = Vector2(-8, 0)
+polygon = PackedVector2Array(-18, -3, 6, -2, 6, 2, -18, 3)
+color = Color(0.505882, 0.172549, 0.109804, 0.95)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("1")

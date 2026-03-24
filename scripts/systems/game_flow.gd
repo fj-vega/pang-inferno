@@ -74,15 +74,15 @@ func _configure_hud() -> void:
 	if hud.has_method("set_round_time"):
 		hud.call("set_round_time", ROUND_DURATION)
 	if hud.has_method("set_phase"):
-		hud.call("set_phase", "Hunt")
+		hud.call("set_phase", "Hunt of Embers")
 	if hud.has_method("set_objective"):
-		hud.call("set_objective", "Cull foes, gather boons, survive 5 minutes")
+		hud.call("set_objective", "Wield the Ashen Pike, gather relic boons, endure the pit")
 	if hud.has_method("set_boon"):
 		hud.call("set_boon", player.call("get_boon_summary"))
 	if hud.has_method("set_status"):
-		hud.call("set_status", "The cursed arena awakens")
+		hud.call("set_status", "Black-iron rites stir beneath your feet")
 	if hud.has_method("set_controls_hint"):
-		hud.call("set_controls_hint", "Move: WASD or left stick | Aim: mouse or right stick | Fire: Space or A")
+		hud.call("set_controls_hint", "Stride: WASD or left stick | Aim: mouse or right stick | Cast Ashen Pike: Space or A")
 	if hud.has_method("set_health"):
 		hud.call("set_health", player_health.call("get_current_health"), player_health.call("get_max_health"))
 	if hud.has_method("set_score"):
@@ -136,11 +136,11 @@ func _spawn_boss_phase() -> void:
 	enemy_container.add_child(boss)
 	_connect_enemy(boss)
 	if hud.has_method("set_phase"):
-		hud.call("set_phase", "Boss")
+		hud.call("set_phase", "Infernal Reckoning")
 	if hud.has_method("set_objective"):
-		hud.call("set_objective", "Slay the infernal champion")
+		hud.call("set_objective", "Break the infernal champion before the pit claims you")
 	if hud.has_method("set_status"):
-		hud.call("set_status", "Boss phase: infernal champion rises")
+		hud.call("set_status", "Infernal champion rises from the blood altar")
 
 
 func _spawn_projectile(origin: Vector2, direction: Vector2, pierce_count: int) -> void:
@@ -165,11 +165,11 @@ func _on_player_health_changed(current_health: int, max_health: int) -> void:
 func _on_player_died() -> void:
 	run_over = true
 	if hud.has_method("set_phase"):
-		hud.call("set_phase", "Defeat")
+		hud.call("set_phase", "Fallen")
 	if hud.has_method("set_objective"):
-		hud.call("set_objective", "The hunt is lost")
+		hud.call("set_objective", "The pit has claimed the hunter")
 	if hud.has_method("set_status"):
-		hud.call("set_status", "The hunter has fallen")
+		hud.call("set_status", "The hunter falls beneath the inferno")
 
 
 func _on_enemy_defeated(position: Vector2, score_value: int, split_count: int, child_rank: int, child_scale: float) -> void:
@@ -181,7 +181,7 @@ func _on_enemy_defeated(position: Vector2, score_value: int, split_count: int, c
 		_on_boss_defeated()
 		return
 	if hud.has_method("set_status"):
-		hud.call("set_status", "Infernal foe destroyed")
+		hud.call("set_status", "Infernal orb broken beneath black iron")
 	if split_count > 0 and child_rank > 0 and not boss_active:
 		_spawn_split_children(position, split_count, child_rank, child_scale)
 
@@ -216,31 +216,31 @@ func _on_powerup_collected(effect_name: String) -> void:
 		"rapid_fire":
 			player.call("apply_rapid_fire", 0.45, 8.0)
 			if hud.has_method("set_objective"):
-				hud.call("set_objective", "Spend your boon before it fades")
+				hud.call("set_objective", "Blood Rite burns fast; spend it in the press of battle")
 			if hud.has_method("set_status"):
-				hud.call("set_status", "Blood rite: rapid fire")
+				hud.call("set_status", "Blood Rite claimed: Ashen Pike quickens")
 		"heal":
 			player_health.call("heal", 2)
 			if hud.has_method("set_objective"):
-				hud.call("set_objective", "Regain momentum and hold the arena")
+				hud.call("set_objective", "Iron Ward restores your vigor; press the hunt")
 			if hud.has_method("set_status"):
-				hud.call("set_status", "Iron ward: vitality restored")
+				hud.call("set_status", "Iron Ward claimed: your vigor is reforged")
 		"pierce":
 			player.call("grant_piercing_shots", 8)
 			if hud.has_method("set_objective"):
-				hud.call("set_objective", "Void thorns can carve through clustered foes")
+				hud.call("set_objective", "Void Thorn will skewer clustered demons")
 			if hud.has_method("set_status"):
-				hud.call("set_status", "Void thorn: shots pierce")
+				hud.call("set_status", "Void Thorn claimed: bolts now skewer the damned")
 
 
 func _on_round_survived() -> void:
 	run_over = true
 	if hud.has_method("set_phase"):
-		hud.call("set_phase", "Survived")
+		hud.call("set_phase", "Endured")
 	if hud.has_method("set_objective"):
-		hud.call("set_objective", "Endure until the next descent")
+		hud.call("set_objective", "You endured the pit until the embers dimmed")
 	if hud.has_method("set_status"):
-		hud.call("set_status", "You survived the round")
+		hud.call("set_status", "The pit relents, for now")
 
 
 func _on_boss_defeated() -> void:
@@ -251,11 +251,11 @@ func _on_boss_defeated() -> void:
 	for child in powerup_container.get_children():
 		child.queue_free()
 	if hud.has_method("set_phase"):
-		hud.call("set_phase", "Victory")
+		hud.call("set_phase", "Champion Broken")
 	if hud.has_method("set_objective"):
-		hud.call("set_objective", "The infernal champion is broken")
+		hud.call("set_objective", "The blood altar lies silent beneath your triumph")
 	if hud.has_method("set_status"):
-		hud.call("set_status", "Victory: infernal champion slain")
+		hud.call("set_status", "Victory: the infernal champion lies broken")
 
 
 func _on_player_boons_changed(summary_text: String) -> void:

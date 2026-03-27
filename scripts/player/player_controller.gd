@@ -7,6 +7,7 @@ const MOVE_SPEED := 360.0
 const ARENA_MARGIN := 48.0
 const ARENA_SIZE := Vector2(1280.0, 720.0)
 const BASE_FIRE_COOLDOWN := 0.22
+const PROJECTILE_SPAWN_DISTANCE := 30.0
 
 @onready var facing_indicator: Polygon2D = $FacingIndicator
 
@@ -75,7 +76,7 @@ func _update_firing(delta: float) -> void:
 		return
 
 	fire_cooldown_remaining = BASE_FIRE_COOLDOWN * fire_cooldown_multiplier
-	shot_requested.emit(global_position + (look_direction * 24.0), look_direction, piercing_shots_remaining)
+	shot_requested.emit(global_position + (look_direction * PROJECTILE_SPAWN_DISTANCE), look_direction, piercing_shots_remaining)
 
 
 func apply_rapid_fire(cooldown_multiplier: float, duration: float) -> void:

@@ -33,6 +33,8 @@ func setup(new_direction: Vector2, pierce_count: int = 0) -> void:
 
 
 func _on_body_entered(body: Node) -> void:
+	if body.is_in_group("player"):
+		return
 	if body.has_method("take_damage"):
 		body.call("take_damage", 1)
 		if remaining_pierces > 0:

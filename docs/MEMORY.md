@@ -103,3 +103,10 @@ Use this file for discoveries that future tasks should not have to rediscover.
 - Discovery: A small number of polygon-based changes carry a lot of thematic weight: naming the base weapon, giving pickups distinct relic silhouettes and labels, tinting projectiles by boon type, and dressing the arena with a ritual dais all make the run feel meaningfully more Conan-plus-magic.
 - Decision: Keep the first flavor pass asset-free and scene-local so the project gains identity without blocking on imported art, fonts, or shader work.
 - Follow-up: The next documentation pass should describe the themed MVP as it exists now, then later art/audio passes can replace these placeholders with authored assets.
+
+### 2026-03-27 - Projectile Self-Collision Regression
+
+- Context: Follow-up playtesting after the flavor pass showed shots sometimes triggering the attack feedback without a visible projectile leaving the hunter.
+- Discovery: Projectiles could spawn close enough to the player body to immediately receive a `body_entered` event from the hunter and despawn before they visibly cleared the sprite.
+- Decision: Spawn projectiles slightly farther forward and ignore collision events from bodies in the `player` group.
+- Follow-up: If combat still feels inconsistent after this, add a focused regression scene that logs projectile spawn positions and first collision targets.

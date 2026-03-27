@@ -73,6 +73,8 @@ func _connect_gameplay_signals() -> void:
 func _configure_hud() -> void:
 	if hud.has_method("set_round_time"):
 		hud.call("set_round_time", ROUND_DURATION)
+	if hud.has_method("clear_result"):
+		hud.call("clear_result")
 	if hud.has_method("set_phase"):
 		hud.call("set_phase", "Hunt of Embers")
 	if hud.has_method("set_objective"):
@@ -170,6 +172,8 @@ func _on_player_died() -> void:
 		hud.call("set_objective", "The pit has claimed the hunter")
 	if hud.has_method("set_status"):
 		hud.call("set_status", "The hunter falls beneath the inferno")
+	if hud.has_method("show_result"):
+		hud.call("show_result", "You Died", "The inferno took the hunter. Press F5 to descend again.", Color(0.819608, 0.278431, 0.227451, 1))
 
 
 func _on_enemy_defeated(position: Vector2, score_value: int, split_count: int, child_rank: int, child_scale: float) -> void:
@@ -241,6 +245,8 @@ func _on_round_survived() -> void:
 		hud.call("set_objective", "You endured the pit until the embers dimmed")
 	if hud.has_method("set_status"):
 		hud.call("set_status", "The pit relents, for now")
+	if hud.has_method("show_result"):
+		hud.call("show_result", "Round Survived", "You lasted until the final embers. Press F5 to hunt again.", Color(0.878431, 0.678431, 0.352941, 1))
 
 
 func _on_boss_defeated() -> void:
@@ -256,6 +262,8 @@ func _on_boss_defeated() -> void:
 		hud.call("set_objective", "The blood altar lies silent beneath your triumph")
 	if hud.has_method("set_status"):
 		hud.call("set_status", "Victory: the infernal champion lies broken")
+	if hud.has_method("show_result"):
+		hud.call("show_result", "Victory", "The infernal champion is broken. Press F5 to begin a new descent.", Color(0.92549, 0.780392, 0.470588, 1))
 
 
 func _on_player_boons_changed(summary_text: String) -> void:
@@ -278,6 +286,7 @@ func _ensure_input_actions() -> bool:
 	changed = _add_key_action("move_down", KEY_S, KEY_DOWN) or changed
 	changed = _add_key_action("fire", KEY_SPACE, KEY_ENTER) or changed
 	changed = _add_key_action("pause", KEY_ESCAPE, KEY_P) or changed
+	changed = _add_mouse_button_action("fire", MOUSE_BUTTON_LEFT) or changed
 	changed = _add_joy_axis_action("move_left", JOY_AXIS_LEFT_X, -1.0) or changed
 	changed = _add_joy_axis_action("move_right", JOY_AXIS_LEFT_X, 1.0) or changed
 	changed = _add_joy_axis_action("move_up", JOY_AXIS_LEFT_Y, -1.0) or changed
@@ -336,6 +345,20 @@ func _add_joy_button_action(action_name: StringName, button_index: JoyButton) ->
 		if existing_event is InputEventJoypadButton and existing_event.button_index == button_index:
 			return changed
 	var event := InputEventJoypadButton.new()
+	event.button_index = button_index
+	InputMap.action_add_event(action_name, event)
+	return true
+
+
+func _add_mouse_button_action(action_name: StringName, button_index: MouseButton) -> bool:
+	var changed := false
+	if not InputMap.has_action(action_name):
+		InputMap.add_action(action_name)
+		changed = true
+	for existing_event in InputMap.action_get_events(action_name):
+		if existing_event is InputEventMouseButton and existing_event.button_index == button_index:
+			return changed
+	var event := InputEventMouseButton.new()
 	event.button_index = button_index
 	InputMap.action_add_event(action_name, event)
 	return true

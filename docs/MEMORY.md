@@ -110,3 +110,10 @@ Use this file for discoveries that future tasks should not have to rediscover.
 - Discovery: The weapon logic only polled `Input.is_action_pressed("fire")` during physics frames, so short tap inputs could be missed entirely; run-end messaging also lived only in the regular HUD text stack, which was too easy to overlook.
 - Decision: Buffer fire input inside `player_controller.gd`, add left mouse as a first-class fire input, and give the HUD a dedicated centered result panel for death, survival, and victory states.
 - Follow-up: If more input issues appear, the next step should be a focused gameplay test harness or manual regression checklist around movement, aim, fire, death, and restart flow.
+
+### 2026-03-27 - Serialize Mouse Fire Binding
+
+- Context: Follow-up testing showed that left click still did not reliably fire even after runtime bootstrap logic existed for the mouse button.
+- Discovery: The project had no serialized input map in `project.godot`, so the mouse binding depended entirely on startup mutation of project settings instead of being part of the stable project config.
+- Decision: Serialize the active input map into `project.godot`, including left click on `fire`, and align the HUD controls text with that binding.
+- Follow-up: The more of the stable control scheme we keep in `project.godot`, the less we should rely on startup code to mutate input configuration.

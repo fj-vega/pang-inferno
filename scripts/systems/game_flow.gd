@@ -84,7 +84,7 @@ func _configure_hud() -> void:
 	if hud.has_method("set_status"):
 		hud.call("set_status", "Black-iron rites stir beneath your feet")
 	if hud.has_method("set_controls_hint"):
-		hud.call("set_controls_hint", "Stride: WASD or left stick | Aim: mouse or right stick | Cast Ashen Pike: Space or A")
+		hud.call("set_controls_hint", "Stride: WASD or left stick | Aim: mouse or right stick | Cast Ashen Pike: Left Click, Space, or A")
 	if hud.has_method("set_health"):
 		hud.call("set_health", player_health.call("get_current_health"), player_health.call("get_max_health"))
 	if hud.has_method("set_score"):

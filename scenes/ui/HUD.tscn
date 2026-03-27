@@ -66,7 +66,7 @@ text = "Controls"
 [node name="ControlsValue" type="Label" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(420, 0)
 autowrap_mode = 3
-text = "Move: WASD or left stick | Aim: mouse or right stick | Fire: Space or A"
+text = "Move: WASD or left stick | Aim: mouse or right stick | Fire: Left Click, Space, or A"
 
 [node name="ResultPanel" type="PanelContainer" parent="."]
 visible = false

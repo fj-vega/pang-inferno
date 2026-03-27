@@ -7,17 +7,24 @@ const MOVE_SPEED := 360.0
 const ARENA_MARGIN := 48.0
 const ARENA_SIZE := Vector2(1280.0, 720.0)
 const BASE_FIRE_COOLDOWN := 0.22
+const FIRE_BUFFER_DURATION := 0.12
 
 @onready var facing_indicator: Polygon2D = $FacingIndicator
 
 var look_direction := Vector2.RIGHT
 var fire_cooldown_remaining := 0.0
+var fire_buffer_remaining := 0.0
 var fire_cooldown_multiplier := 1.0
 var rapid_fire_duration_remaining := 0.0
 var piercing_shots_remaining := 0
 
 func _ready() -> void:
 	add_to_group("player")
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("fire"):
+		fire_buffer_remaining = FIRE_BUFFER_DURATION
 
 
 func _physics_process(delta: float) -> void:
@@ -69,12 +76,15 @@ func _update_buff_timers(delta: float) -> void:
 
 func _update_firing(delta: float) -> void:
 	fire_cooldown_remaining = max(fire_cooldown_remaining - delta, 0.0)
-	if not Input.is_action_pressed("fire"):
+	fire_buffer_remaining = max(fire_buffer_remaining - delta, 0.0)
+	var wants_to_fire := Input.is_action_pressed("fire") or fire_buffer_remaining > 0.0
+	if not wants_to_fire:
 		return
 	if fire_cooldown_remaining > 0.0:
 		return
 
 	fire_cooldown_remaining = BASE_FIRE_COOLDOWN * fire_cooldown_multiplier
+	fire_buffer_remaining = 0.0
 	shot_requested.emit(global_position + (look_direction * 24.0), look_direction, piercing_shots_remaining)
 
 

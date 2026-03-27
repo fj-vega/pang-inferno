@@ -11,7 +11,7 @@ Use this file to record the actual project layout and architecture decisions.
 | `scenes/enemies/EnemyBase.tscn` | Shared base enemy scene | `CharacterBody2D` | Supports bounce motion and rank-based evolution |
 | `scenes/enemies/Boss.tscn` | Final boss encounter | `CharacterBody2D` | Spawned late in the 5-minute round |
 | `scenes/powerups/PowerUpPickup.tscn` | Collectible upgrade or buff pickup | `Area2D` | Applies run effects on contact and displays a named relic silhouette for each boon |
-| `scenes/ui/HUD.tscn` | In-run UI | `CanvasLayer` | Shows health, timer, score, phase, active boon state, status text, and control guidance |
+| `scenes/ui/HUD.tscn` | In-run UI | `CanvasLayer` | Shows health, timer, score, phase, active boon state, status text, control guidance, and centered end-of-run feedback |
 
 ## Scripts and Systems
 
@@ -65,6 +65,7 @@ Record important event flow between scenes and systems here.
 - Defeating the boss now resolves the run into a distinct victory state instead of falling through to generic timer survival.
 - The player now emits boon summary updates, allowing the HUD to display active rapid-fire and piercing effects without polling multiple gameplay systems.
 - The current presentation layer leans on lightweight polygonal scene dressing and runtime text rather than imported art so the MVP can feel thematic before a true asset pass exists.
+- The HUD now owns a centered result panel for death, survival, and victory messaging so run-ending states are obvious even when the status line is missed.
 
 ## Node Access Strategy
 

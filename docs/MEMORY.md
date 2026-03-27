@@ -103,3 +103,10 @@ Use this file for discoveries that future tasks should not have to rediscover.
 - Discovery: A small number of polygon-based changes carry a lot of thematic weight: naming the base weapon, giving pickups distinct relic silhouettes and labels, tinting projectiles by boon type, and dressing the arena with a ritual dais all make the run feel meaningfully more Conan-plus-magic.
 - Decision: Keep the first flavor pass asset-free and scene-local so the project gains identity without blocking on imported art, fonts, or shader work.
 - Follow-up: The next documentation pass should describe the themed MVP as it exists now, then later art/audio passes can replace these placeholders with authored assets.
+
+### 2026-03-27 - Firing Reliability And Game Over Feedback
+
+- Context: Brief hands-on testing found that firing often failed on quick taps and that death did not read as a clear end state.
+- Discovery: The weapon logic only polled `Input.is_action_pressed("fire")` during physics frames, so short tap inputs could be missed entirely; run-end messaging also lived only in the regular HUD text stack, which was too easy to overlook.
+- Decision: Buffer fire input inside `player_controller.gd`, add left mouse as a first-class fire input, and give the HUD a dedicated centered result panel for death, survival, and victory states.
+- Follow-up: If more input issues appear, the next step should be a focused gameplay test harness or manual regression checklist around movement, aim, fire, death, and restart flow.

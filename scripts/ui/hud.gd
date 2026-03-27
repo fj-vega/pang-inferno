@@ -11,6 +11,9 @@ const NORMAL_HEALTH_COLOR := Color(0.964706, 0.905882, 0.811765, 1)
 @onready var boon_value: Label = $MarginContainer/VBoxContainer/BoonValue
 @onready var status_value: Label = $MarginContainer/VBoxContainer/StatusValue
 @onready var controls_value: Label = $MarginContainer/VBoxContainer/ControlsValue
+@onready var result_panel: PanelContainer = $ResultPanel
+@onready var result_title: Label = $ResultPanel/MarginContainer/VBoxContainer/ResultTitle
+@onready var result_subtitle: Label = $ResultPanel/MarginContainer/VBoxContainer/ResultSubtitle
 
 func set_health(current_health: int, max_health: int) -> void:
 	health_value.text = "%d / %d" % [current_health, max_health]
@@ -46,3 +49,14 @@ func set_status(text: String) -> void:
 
 func set_controls_hint(text: String) -> void:
 	controls_value.text = text
+
+
+func show_result(title: String, subtitle: String, accent_color: Color) -> void:
+	result_panel.visible = true
+	result_title.text = title
+	result_title.modulate = accent_color
+	result_subtitle.text = subtitle
+
+
+func clear_result() -> void:
+	result_panel.visible = false

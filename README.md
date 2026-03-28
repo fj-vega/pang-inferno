@@ -2,6 +2,8 @@
 
 Pang Inferno is a 2D top-down dark fantasy arena survival shooter built in Godot 4.
 
+This repo was just meant to be a vibe coding experiment: take a starter, build a small playable idea quickly, and see how far a Codex-driven Godot workflow could push a focused arcade prototype.
+
 The game mixes the ricochet threat pattern of Pang with the escalating survival pressure of Vampire Survivors. You control a mobile hunter in a cursed arena, dodge infernal enemies that rebound across the battlefield, collect power-ups, and survive long enough to face a final boss.
 
 ## Game Pillars
@@ -39,6 +41,18 @@ The repo is no longer just a starter template. It now includes:
 - a bootstrap main scene in [scenes/main/Main.tscn](/E:/My%20Documents/coding/pang-inferno/scenes/main/Main.tscn)
 - starter player, enemy, power-up, HUD, and game-flow scripts
 - headless validation support through Godot CLI and GitHub Actions
+
+Current state in plain terms:
+
+- playable single-round MVP
+- keyboard/controller fire support
+- mouse aiming support
+- dark fantasy placeholder presentation
+- still rough and intentionally incomplete in polish, content, and feel
+
+Known limitation:
+
+- mouse firing was attempted during development and discarded after unreliable behavior in playtesting
 
 The current bootstrap already opens and validates cleanly with:
 
@@ -86,6 +100,7 @@ Important project docs:
 - `docs/STRUCTURE.md`: scene and system architecture
 - `docs/MEMORY.md`: implementation discoveries and decisions
 - `docs/ASSETS.md`: asset planning and ownership
+- `docs/FINAL_STATE.md`: final MVP snapshot, controls, limitations, and discarded ideas
 
 ## Repository Layout
 

@@ -6,7 +6,7 @@
 - Genre: 2D top-down arena survival shooter
 - Perspective: Top-down
 - Target platform: PC
-- Primary input: Keyboard and controller
+- Primary input: Keyboard and controller, with mouse aim support
 - Target session length: 5-minute rounds
 
 ## Vision
@@ -84,7 +84,7 @@ The MVP is a single 5-minute arena with one playable character, twin-stick-style
 - Target Godot version: Godot 4 stable
 - 2D or 3D: 2D
 - Planned autoloads: Prefer none for MVP unless a run-state or event service becomes clearly global
-- Special engine concerns: Need responsive keyboard and controller handling, deterministic-enough bounce behavior for enemies, and clean enemy state transitions for split and mutation logic
+- Special engine concerns: Need responsive keyboard and controller handling, deterministic-enough bounce behavior for enemies, and clean enemy state transitions for split and mutation logic. Mouse aim remains supported, but mouse firing was attempted and intentionally discarded after unreliable playtest behavior.
 
 ## Risks
 

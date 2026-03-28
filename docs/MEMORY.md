@@ -110,3 +110,10 @@ Use this file for discoveries that future tasks should not have to rediscover.
 - Discovery: The weapon logic only polled `Input.is_action_pressed("fire")` during physics frames, so short tap inputs could be missed entirely; run-end messaging also lived only in the regular HUD text stack, which was too easy to overlook.
 - Decision: Buffer fire input inside `player_controller.gd`, add left mouse as a first-class fire input, and give the HUD a dedicated centered result panel for death, survival, and victory states.
 - Follow-up: If more input issues appear, the next step should be a focused gameplay test harness or manual regression checklist around movement, aim, fire, death, and restart flow.
+
+### 2026-03-28 - Mouse Firing Discarded
+
+- Context: Even after several attempts to support left-click firing, playtesting still found the feature unreliable enough to undermine confidence in the control scheme.
+- Discovery: For this experiment, the mouse-fire path cost more trust than it added value. Keyboard/controller fire plus mouse aim is the stable combination.
+- Decision: Discard mouse firing from the supported feature set, remove the runtime mouse-fire binding, and document the attempt as abandoned rather than pretending the feature is complete.
+- Follow-up: If the project ever resumes active development, revisit mouse firing only with a focused test harness and a clean input architecture instead of incremental patches.

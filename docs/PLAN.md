@@ -80,3 +80,13 @@ Use this file as the ordered implementation backlog.
 - Targets: `scripts/powerups/`, `docs/ASSETS.md`, `docs/PRD.md`
 - Verify: At least three distinct upgrade effects are available and clearly noticeable during a run.
 - Notes: The current MVP now frames the base weapon as the Ashen Pike, gives boon pickups distinct relic silhouettes and labels, and dresses the arena in a ritual black-iron look without changing the underlying combat rules.
+
+### 6. Final Documentation Pass
+
+- Status: `done`
+- Depends on: `2. Core Loop Slice`, `3. UX and Feedback Pass`, `5. Power-Up and Weapon Flavor Pass`
+- Goal: Capture the shipped state of the experiment clearly, including supported controls, limitations, discarded ideas, and the actual MVP quality bar reached.
+- Player value: Anyone opening the repo understands what exists, what is rough, and what was intentionally left out.
+- Targets: `README.md`, `docs/PRD.md`, `docs/STRUCTURE.md`, `docs/MEMORY.md`, `docs/FINAL_STATE.md`
+- Verify: A reader can tell this is a playable but rough vibe-coding experiment and can identify the supported controls and major limitations without digging through commit history.
+- Notes: Mouse firing was attempted and discarded. Keyboard/controller fire plus mouse aim remains the supported control scheme.

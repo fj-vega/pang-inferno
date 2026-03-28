@@ -286,7 +286,6 @@ func _ensure_input_actions() -> bool:
 	changed = _add_key_action("move_down", KEY_S, KEY_DOWN) or changed
 	changed = _add_key_action("fire", KEY_SPACE, KEY_ENTER) or changed
 	changed = _add_key_action("pause", KEY_ESCAPE, KEY_P) or changed
-	changed = _add_mouse_button_action("fire", MOUSE_BUTTON_LEFT) or changed
 	changed = _add_joy_axis_action("move_left", JOY_AXIS_LEFT_X, -1.0) or changed
 	changed = _add_joy_axis_action("move_right", JOY_AXIS_LEFT_X, 1.0) or changed
 	changed = _add_joy_axis_action("move_up", JOY_AXIS_LEFT_Y, -1.0) or changed
@@ -345,20 +344,6 @@ func _add_joy_button_action(action_name: StringName, button_index: JoyButton) ->
 		if existing_event is InputEventJoypadButton and existing_event.button_index == button_index:
 			return changed
 	var event := InputEventJoypadButton.new()
-	event.button_index = button_index
-	InputMap.action_add_event(action_name, event)
-	return true
-
-
-func _add_mouse_button_action(action_name: StringName, button_index: MouseButton) -> bool:
-	var changed := false
-	if not InputMap.has_action(action_name):
-		InputMap.add_action(action_name)
-		changed = true
-	for existing_event in InputMap.action_get_events(action_name):
-		if existing_event is InputEventMouseButton and existing_event.button_index == button_index:
-			return changed
-	var event := InputEventMouseButton.new()
 	event.button_index = button_index
 	InputMap.action_add_event(action_name, event)
 	return true

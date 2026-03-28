@@ -50,6 +50,8 @@ Use this file to record the actual project layout and architecture decisions.
 | `dash` | Keyboard, controller | Reserved for a possible evasive skill if the loop needs it |
 | `pause` | Keyboard, controller | Pause the round |
 
+Current note: mouse aim is supported through cursor position, but mouse firing was attempted and intentionally discarded after unreliable playtesting.
+
 ## Signal Boundaries
 
 Record important event flow between scenes and systems here.
